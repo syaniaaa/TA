@@ -1,0 +1,49 @@
+<?php
+
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\DiseaseController;
+use App\Http\Controllers\Admin\SymptomController;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('admin.dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__ . '/auth.php';
+
+
+Route::get('/users', [UserController::class, 'index'])->name('user');
+Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+Route::post('/users', [UserController::class, 'store'])->name('user.store');
+Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+Route::match(['put', 'patch'], '/user/{id}', [UserController::class, 'update'])->name('user.update');
+Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+Route::get('/user/search', [UserController::class, 'search'])->name('user.search');
+
+
+Route::get('/diseases', [DiseaseController::class, 'index'])->name('disease');
+Route::get('/disease/create', [DiseaseController::class, 'create'])->name('disease.create');
+Route::post('/diseases', [DiseaseController::class, 'store'])->name('disease.store');
+Route::get('/disease/{id}/edit', [DiseaseController::class, 'edit'])->name('disease.edit');
+Route::match(['put', 'patch'], '/disease/{id}', [DiseaseController::class, 'update'])->name('disease.update');
+Route::delete('/disease/{id}', [DiseaseController::class, 'destroy'])->name('disease.destroy');
+Route::get('/disease/search', [DiseaseController::class, 'search'])->name('disease.search');
+
+Route::get('/symptoms', [SymptomController::class, 'index'])->name('symptom');
+Route::get('/symptom/create', [SymptomController::class, 'create'])->name('symptom.create');
+Route::post('/symptoms', [SymptomController::class, 'store'])->name('symptom.store');
+Route::get('/symptom/{id}/edit', [SymptomController::class, 'edit'])->name('symptom.edit');
+Route::match(['put', 'patch'], '/symptom/{id}', [SymptomController::class, 'update'])->name('symptom.update');
+Route::delete('/symptom/{id}', [SymptomController::class, 'destroy'])->name('symptom.destroy');
+Route::get('/symptom/search', [SymptomController::class, 'search'])->name('symptom.search');
