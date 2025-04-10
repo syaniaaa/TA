@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DiseaseController;
 use App\Http\Controllers\Admin\SymptomController;
+use App\Http\Controllers\Admin\FuzzySetController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,3 +48,11 @@ Route::get('/symptom/{id}/edit', [SymptomController::class, 'edit'])->name('symp
 Route::match(['put', 'patch'], '/symptom/{id}', [SymptomController::class, 'update'])->name('symptom.update');
 Route::delete('/symptom/{id}', [SymptomController::class, 'destroy'])->name('symptom.destroy');
 Route::get('/symptom/search', [SymptomController::class, 'search'])->name('symptom.search');
+
+Route::get('/fuzzySets', [FuzzySetController::class, 'index'])->name('fuzzy_set');
+Route::get('/fuzzy_set/create', [FuzzySetController::class, 'create'])->name('fuzzy_set.create');
+Route::post('/fuzzy_sets', [FuzzySetController::class, 'store'])->name('fuzzy_set.store');
+Route::get('/fuzzy_set/{id}/edit', [FuzzySetController::class, 'edit'])->name('fuzzy_set.edit');
+Route::match(['put', 'patch'], '/fuzzy_set/{id}', [FuzzySetController::class, 'update'])->name('fuzzy_set.update');
+Route::delete('/fuzzy_set/{id}', [FuzzySetController::class, 'destroy'])->name('fuzzy_set.destroy');
+Route::get('/fuzzy_set/search', [FuzzySetController::class, 'search'])->name('fuzzy_set.search');

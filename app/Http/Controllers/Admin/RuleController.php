@@ -26,15 +26,14 @@ class RuleController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama' => 'required|max:50',
-            'deskripsi' => 'required|max:200',
-            'solusi' => 'required|max:200',
+            'keputusan' => 'required|max:50',
+            'disease_id' => 'required|exists:diseases,id',
         ]);
 
         Rule::create($validated);
 
         $notification = array(
-            'message' => 'Data Penyakit berhasil ditambahkan',
+            'message' => 'Data Aturan berhasil ditambahkan',
             'alert-type' => 'success'
         );
 
@@ -57,13 +56,12 @@ class RuleController extends Controller
     {
 
         $validated = $request->validate([
-            'nama' => 'required|max:50',
-            'deskripsi' => 'required|max:200',
-            'solusi' => 'required|max:200',
+            'keputusan' => 'required|max:50',
+            'disease_id' => 'required|exists:diseases,id',
         ]);
         Rule::where('id', $id)->update($validated);
         $notification = array(
-            'message' => 'Data Penyakit berhasil diperbaharui',
+            'message' => 'Data Aturan berhasil diperbaharui',
             'alert-type' => 'success'
         );
         return redirect()->route('rule')->with($notification);
@@ -76,7 +74,7 @@ class RuleController extends Controller
 
         $rule->delete();
         $notification = array(
-            'message' => 'Data Penyakit berhasil dihapus',
+            'message' => 'Data Aturan berhasil dihapus',
             'alert-type' => 'success'
         );
         return redirect()->route('rule')->with($notification);

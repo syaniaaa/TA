@@ -44,8 +44,11 @@
                 {{ __('Kelola Penyakit') }}
             </x-nav-link>
         </li>
-        <li>
-            <x-nav-link :href="route('symptom')" :active="request()->routeIs('symptom') || request()->routeIs('symptom.index')">
+
+
+        <li class="hs-accordion" id="users-accordion">
+            <button type="button"
+                class="hs-accordion-toggle hs-accordion-active:text-green-500 hs-accordion-active:hover:bg-transparent w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hs-accordion-active:text-white">
                 <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"
                     fill="currentColor">
                     <path
@@ -53,9 +56,38 @@
                     <path
                         d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1" />
                 </svg>
-                {{ __('Kelola Gejala') }}
-            </x-nav-link>
+                Kelola Gejala
+
+                <svg class="hs-accordion-active:block ms-auto hidden size-4 text-green-600 group-hover:text-gray-500 dark:text-neutral-400"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m18 15-6-6-6 6" />
+                </svg>
+
+                <svg class="hs-accordion-active:hidden ms-auto block size-4 text-gray-600 group-hover:text-gray-500 dark:text-neutral-400"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m6 9 6 6 6-6" />
+                </svg>
+            </button>
+
+            <div class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
+                <ul class="hs-accordion-group ps-3 pt-2 space-y-2" data-hs-accordion-always-open>
+                    <li>
+                        <x-nav-link :href="route('symptom')" :active="request()->routeIs('symptom') || request()->routeIs('symptom.index')">
+                            {{ __('Kelola Gejala') }}
+                        </x-nav-link>
+                    </li>
+
+                    <li>
+                        <x-nav-link :href="route('fuzzy_set')" :active="request()->routeIs('fuzzy_set') || request()->routeIs('fuzzy_set.index')">
+                            {{ __('Kelola Aturan Gejala') }}
+                        </x-nav-link>
+                    </li>
+                </ul>
+            </div>
         </li>
+
         <li>
             <div
                 class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300">
@@ -120,8 +152,9 @@
                 {{ Auth::user()->name }}
 
                 <svg class="hs-accordion-active:block ms-auto hidden size-5 text-green-600 group-hover:text-gray-500 dark:text-neutral-400"
-                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
                     <path d="m18 15-6-6-6 6" />
                 </svg>
 
