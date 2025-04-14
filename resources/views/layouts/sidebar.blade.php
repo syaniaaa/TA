@@ -1,10 +1,10 @@
-<div class="px-6 flex justify-center">
+<div class="px-6 flex justify-center ">
     <a class="flex-none text-xl font-semibold dark:text-white" aria-label="Brand">
         <img class="w-30 h-20" src="img/logo.png">
     </a>
 </div>
 
-<nav class="hs-accordion-group p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
+<nav class="font-poppins hs-accordion-group p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
     <ul class="space-y-1.5">
         <li>
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">

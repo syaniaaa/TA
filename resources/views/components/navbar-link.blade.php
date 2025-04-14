@@ -1,22 +1,9 @@
-{{-- @props(['active'])
-
-@php
-$classes = ($active ?? false)
-            ? 'font-medium text-xl text-gray-100 '
-            : 'text-red-500 hover:bg-yellow-200';
-@endphp
-
-<a {{ $attributes->merge(['class' => $classes]) }}>
-    {{ $slot }}
-</a> --}}
-
 @props(['active'])
 
 @php
-    $classes =
-        $active ?? false
-            ? 'font-medium text-xl text-red-500 bg-[#F0FF42] px-2 py-1 rounded-lg' // Mengatur padding dan border-radius untuk halaman aktif
-            : 'font-medium text-xl text-gray-100 hover:text-red-400 hover:bg-[#F0FF42] hover:rounded-lg px-2 py-1'; // Gaya hover yang serupa
+    $classes = $active
+        ? 'font-poppins relative text-lg font-semibold text-green-700 after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-green-400 after:to-yellow-400'
+        : 'font-poppins relative text-lg font-medium text-white hover:text-yellow-100 transition-all duration-300 after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-green-400 after:to-yellow-400 hover:after:w-full after:transition-all after:duration-300';
 @endphp
 
 <a {{ $attributes->merge(['class' => $classes]) }}>
