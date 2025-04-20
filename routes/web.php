@@ -6,13 +6,38 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DiseaseController;
 use App\Http\Controllers\Admin\SymptomController;
 use App\Http\Controllers\Admin\FuzzySetController;
+use App\Http\Controllers\Patient\DiagnosisController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/home', function () {
+    return view('home');
+});
+
 Route::get('/', function () {
     return view('home');
-})->name('home');
+})->name('homepage');
+
+Route::get('/patientData', function () {
+    return view('patient.diagnosis.patientData');
+});
+
+// Route::get('/symptom', function () {
+//     return view('patient.diagnosis.symptom');
+// })->name('diagnosis.symptom');
+
+Route::get('/riskTest', function () {
+    return view('patient.diagnosis.riskTest');
+})->name('diagnosis.riskTest');
+
+Route::get('/result', function () {
+    return view('patient.diagnosis.result');
+})->name('diagnosis.result');
+
+
+Route::get('/symptomTest', [DiagnosisController::class, 'create'])->name('diagnosis.symptomTest');
+Route::post('/symptomTest', [DiagnosisController::class, 'store'])->name('diagnosis.symptomTest.store');
+
+
+
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');

@@ -9,4 +9,10 @@ class Symptom extends Model
     protected $fillable = [
         'nama',
     ];
+
+    public function fuzzySets()
+    {
+        return $this->hasMany(FuzzySet::class, 'symptom_id');
+    }
+
 }

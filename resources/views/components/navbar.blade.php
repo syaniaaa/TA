@@ -13,11 +13,11 @@
                 class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Beranda</a>
             <a href="/informasi"
                 class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Informasi</a>
+                <a href="/patientData"
+                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">
+                Diagnosis </a>
             <a href="/diagnosis"
-                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Diagnosis</a>
-            <a href="/diagnosis"
-                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Riwayat
-                Diagnosis</a>
+                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Riwayat Diagnosis</a>
             <a href="/diagnosis"
                 class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Tentang
                 Kami</a>
