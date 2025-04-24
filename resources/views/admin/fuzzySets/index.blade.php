@@ -62,9 +62,15 @@
                         @foreach ($fuzzy_sets as $fuzzy_set)
                             <tr>
                                 <td>{{ $num++ }} </td>
+                                <td>{{ $fuzzy_set->symptoms ? $fuzzy_set->symptoms->nama : 'Gejala tidak ditemukan' }}</td>
                                 <td>{{ $fuzzy_set->kategori }}</td>
-                                <td>{{ $fuzzy_set->symptoms->nama }}</td>
-                                <td>{{ $fuzzy_set->domain }}</td>
+                                <td>
+                                    @if($fuzzy_set->max)
+                                        {{ $fuzzy_set->min }} - {{ $fuzzy_set->max }} {{ $fuzzy_set->unit }}
+                                    @else
+                                        > {{ $fuzzy_set->min }} {{ $fuzzy_set->unit }}
+                                    @endif
+                                </td>
                                 <td class="flex space-x-2">
                                     <x-tertiary-button tag="a"
                                         href="{{ route('fuzzy_set.edit', $fuzzy_set->id) }}"><svg

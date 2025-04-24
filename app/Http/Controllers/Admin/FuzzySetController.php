@@ -18,7 +18,7 @@ class FuzzySetController extends Controller
     public function create()
     {
         $data['symptoms'] = Symptom::pluck('nama', 'id');
-        $data['fuzzy_sets'] = FuzzySet::pluck('nama', 'id');
+        $data['fuzzy_sets'] = FuzzySet::pluck('kategori', 'id');
         return view('admin.fuzzySets.create', $data);
     }
 
@@ -26,7 +26,9 @@ class FuzzySetController extends Controller
     {
         $validated = $request->validate([
             'kategori' => 'required|max:50',
-            'domain' => 'required|max:50',
+            'min' => 'required|numeric',
+            'max' => 'required|numeric|gte:min',
+            'unit' => 'required|max:50',
             'symptom_id' => 'required|exists:symptoms,id',
         ]);
 
@@ -47,7 +49,7 @@ class FuzzySetController extends Controller
     public function edit(string $id)
     {
         $data['fuzzy_set'] = FuzzySet::find($id);
-        $data['fuzzy_sets'] = FuzzySet::pluck('nama', 'id');
+        $data['symptoms'] = Symptom::pluck('nama', 'id');
 
         return view('admin.fuzzySets.edit', $data);
     }
@@ -57,7 +59,9 @@ class FuzzySetController extends Controller
 
         $validated = $request->validate([
             'kategori' => 'required|max:50',
-            'domain' => 'required|max:50',
+            'min' => 'required|numeric',
+            'max' => 'required|numeric|gte:min',
+            'unit' => 'required|max:50',
             'symptom_id' => 'required|exists:symptoms,id',
         ]);
         FuzzySet::where('id', $id)->update($validated);
@@ -85,7 +89,7 @@ class FuzzySetController extends Controller
     {
         $query = $request->input('query');
 
-        $fuzzy_sets = FuzzySet::where('nama', 'like', "%{$query}%")->get();
+        $fuzzy_sets = FuzzySet::where('kategori', 'like', "%{$query}%")->get();
 
         return view('admin.fuzzySets.index', compact('fuzzy_sets'));
     }

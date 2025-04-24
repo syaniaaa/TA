@@ -8,11 +8,13 @@ class FuzzySet extends Model
 {
     protected $fillable = [
         'kategori',
-        'domain',
+        'min',
+        'max',
+        'unit',
         'symptom_id',
     ];
 
-    public function symptom()
+    public function symptoms()
     {
         return $this->belongsTo(Symptom::class, 'symptom_id');
     }

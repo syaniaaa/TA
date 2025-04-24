@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,7 +13,9 @@ return new class extends Migration
         Schema::create('fuzzy_sets', function (Blueprint $table) {
             $table->id();
             $table->string('kategori', 50);
-            $table->string('domain', 50);
+            $table->float('min');
+            $table->float('max');
+            $table->string('unit');
             $table->unsignedBigInteger('symptom_id');
             $table->foreign('symptom_id')->references('id')->on('symptoms')->onDelete('cascade');
             $table->timestamps();

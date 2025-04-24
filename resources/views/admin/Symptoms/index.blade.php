@@ -32,7 +32,7 @@
                             @foreach ($symptoms as $symptom)
                             @endforeach
                         @else
-                            <p>Pengguna Tidak Ada</p>
+                            <p>Gejala Tidak Ada</p>
                         @endif
                     </div>
                     {{-- end search --}}

@@ -7,26 +7,29 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Halaman Diagnosis</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script>
+        // Fungsi untuk menangani perubahan pada opsi "Ya" dan "Tidak"
+        function toggleForm(symptomId) {
+            const yesOption = document.getElementById('yes_' + symptomId);
+            const formInput = document.getElementById('input_' + symptomId);
+            if (yesOption.checked) {
+                formInput.style.display = 'block'; // Menampilkan form input
+            } else {
+                formInput.style.display = 'none'; // Menyembunyikan form input
+            }
+        }
+    </script>
 </head>
 
 <body>
     <x-navbar></x-navbar>
 
     <div class="mt-24">
-
         <section class="p-10 text-center shadow-md rounded-xl mx-4 lg:mx-24 bg-no-repeat bg-cover bg-center"
             style="background-image: linear-gradient(to right, rgba(20, 139, 64, 0.9), rgba(78, 228, 40, 0.9))">
             <h1 class="text-2xl lg:text-4xl font-extrabold text-gray-100">
                 Tes Diagnosis Tuberkulosis (TB)
             </h1>
-        </section>
-
-        {{-- progress bar --}}
-        <section class="mt-20 px-10">
-            <div class="max-w-4xl mx-auto">
-                <x-stepper></x-stepper>
-
-            </div>
         </section>
 
         <form action="{{ route('diagnosis.symptomTest.store') }}" method="POST"
@@ -44,17 +47,28 @@
                         </label>
 
                         <div class="space-y-2 pl-4">
-                            @foreach ($symptom->fuzzySets as $fuzzySet)
-                                <div class="flex items-center gap-2">
-                                    <input class="form-check-input rounded text-green-600 focus:ring-green-500"
-                                        type="checkbox" value="{{ $fuzzySet->id }}"
-                                        name="jawaban[{{ $symptom->id }}][]" id="fuzzy_{{ $fuzzySet->id }}">
-                                    <label for="fuzzy_{{ $fuzzySet->id }}" class="text-gray-700">
-                                        {{ $fuzzySet->kategori }} <span
-                                            class="text-sm text-gray-500">({{ $fuzzySet->domain }})</span>
-                                    </label>
-                                </div>
-                            @endforeach
+                            <!-- Pilihan "Ya" atau "Tidak" -->
+                            <div class="flex items-center gap-4">
+                                <label for="yes_{{ $symptom->id }}">
+                                    <input type="radio" name="jawaban[{{ $symptom->id }}]" value="yes"
+                                        id="yes_{{ $symptom->id }}" onclick="toggleForm({{ $symptom->id }})">
+                                    Ya
+                                </label>
+                                <label for="no_{{ $symptom->id }}">
+                                    <input type="radio" name="jawaban[{{ $symptom->id }}]" value="no"
+                                        id="no_{{ $symptom->id }}" onclick="toggleForm({{ $symptom->id }})">
+                                    Tidak
+                                </label>
+                            </div>
+
+                            <!-- Form untuk mengisi jawaban jika memilih "Ya" -->
+                            <div id="input_{{ $symptom->id }}" class="mt-4 hidden">
+                                <x-input-label for="input_{{ $symptom->id }}" value="Isi Jawaban Anda" />
+                                <x-text-input id="input_{{ $symptom->id }}" type="number" step="any"
+                                    name="jawaban_input[{{ $symptom->id }}]" class="mt-1 block w-full" required
+                                    placeholder="Masukkan angka" />
+                                <x-input-error class="mt-2" :messages="$errors->get('jawaban_input.{{ $symptom->id }}')" />
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -70,25 +84,21 @@
                 <!-- Tombol Lanjutkan -->
                 <a href="{{ route('diagnosis.riskTest') }}"
                     class="w-full sm:w-auto text-center bg-white hover:bg-green-300 text-green-600 font-semibold py-2 px-6 rounded-xl transition duration-200
-                shadow-lg hover:shadow-2xl outline-none hover:outline-2 hover:outline-green-600">
+                    shadow-lg hover:shadow-2xl outline-none hover:outline-2 hover:outline-green-600">
                     Lanjutkan
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block text-green-600 ml-2"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"></path>
                     </svg>
                 </a>
-
             </div>
         </form>
-
-
 
     </div>
 
     <div class="mt-16">
         <x-footer></x-footer>
     </div>
-
 </body>
 
 </html>

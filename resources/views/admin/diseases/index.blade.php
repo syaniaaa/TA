@@ -9,7 +9,7 @@
             <div class="bg-white light:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-black dark:text-black">
                     <div class="flex justify-between items-center px-6 py-4">
-                        <x-primary-button tag="a" href="{{ route('user.create') }}"
+                        <x-primary-button tag="a" href="{{ route('disease.create') }}"
                             class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-700 text-white text-sm font-semibold rounded-xl shadow-md transition transform hover:scale-105"><svg
                                 class="w-4 h-4 text-gray-100 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
