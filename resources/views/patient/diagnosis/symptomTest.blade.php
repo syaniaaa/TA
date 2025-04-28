@@ -32,6 +32,13 @@
             </h1>
         </section>
 
+        <section class="mt-20 px-10">
+            <div class="max-w-4xl mx-auto">
+                <x-stepper></x-stepper>
+
+            </div>
+        </section>
+
         <form action="{{ route('diagnosis.symptomTest.store') }}" method="POST"
             class="max-w-4xl mx-auto mt-10 space-y-8 px-4">
             @csrf
@@ -40,6 +47,9 @@
                 <h2 class="text-xl font-bold mb-6 text-gray-700">Pertanyaan Gejala</h2>
 
                 @foreach ($symptoms as $index => $symptom)
+                    @php
+                        $fuzzySet = $symptom->fuzzySets->first();
+                    @endphp
                     <div class="mb-6 border-b pb-4">
                         <label class="block font-semibold text-gray-800 mb-2">
                             {{ $loop->iteration }}. Apakah Anda mengalami <span
@@ -47,7 +57,6 @@
                         </label>
 
                         <div class="space-y-2 pl-4">
-                            <!-- Pilihan "Ya" atau "Tidak" -->
                             <div class="flex items-center gap-4">
                                 <label for="yes_{{ $symptom->id }}">
                                     <input type="radio" name="jawaban[{{ $symptom->id }}]" value="yes"
@@ -61,12 +70,27 @@
                                 </label>
                             </div>
 
-                            <!-- Form untuk mengisi jawaban jika memilih "Ya" -->
                             <div id="input_{{ $symptom->id }}" class="mt-4 hidden">
-                                <x-input-label for="input_{{ $symptom->id }}" value="Isi Jawaban Anda" />
-                                <x-text-input id="input_{{ $symptom->id }}" type="number" step="any"
-                                    name="jawaban_input[{{ $symptom->id }}]" class="mt-1 block w-full" required
-                                    placeholder="Masukkan angka" />
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Berapa
+                                    {{ $fuzzySet->unit == 'skala' ? '(skala 1-10)' : '(' . $fuzzySet->unit . ')' }}
+                                    yang Anda rasakan?
+                                </label>
+
+                                <x-text-input id="field_{{ $symptom->id }}" type="number"
+                                    name="jawaban_input[{{ $symptom->id }}]" class="mt-1 block w-full"
+                                    step="{{ $fuzzySet->unit == 'skala' ? 1 : 'any' }}"
+                                    min="{{ $fuzzySet->unit == 'skala' ? 1 : null }}"
+                                    max="{{ $fuzzySet->unit == 'skala' ? 10 : null }}"
+                                    placeholder="{{ $fuzzySet->unit == 'hari'
+                                        ? 'Masukkan jumlah hari'
+                                        : ($fuzzySet->unit == 'kg'
+                                            ? 'Masukkan berat (kg)'
+                                            : ($fuzzySet->unit == 'skala'
+                                                ? 'Masukkan angka antara 1 - 10'
+                                                : 'Masukkan nilai')) }}"
+                                    required />
+
                                 <x-input-error class="mt-2" :messages="$errors->get('jawaban_input.{{ $symptom->id }}')" />
                             </div>
                         </div>

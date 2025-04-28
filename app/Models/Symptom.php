@@ -15,4 +15,11 @@ class Symptom extends Model
         return $this->hasMany(FuzzySet::class, 'symptom_id');
     }
 
+    public function rules()
+    {
+        return $this->belongsToMany(Rule::class, 'rule_symptoms');
+    }
+
+
+
 }

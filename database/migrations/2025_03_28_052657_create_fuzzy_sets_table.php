@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('kategori', 50);
             $table->float('min');
             $table->float('max');
-            $table->string('unit');
+            $table->string('unit',50);
             $table->unsignedBigInteger('symptom_id');
             $table->foreign('symptom_id')->references('id')->on('symptoms')->onDelete('cascade');
             $table->timestamps();

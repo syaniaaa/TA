@@ -18,9 +18,9 @@
                 Diagnosis </a>
             <a href="/diagnosis"
                 class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Riwayat Diagnosis</a>
-            <a href="/diagnosis"
+            {{-- <a href="/diagnosis"
                 class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Tentang
-                Kami</a>
+                Kami</a> --}}
             <a href="/kontak"
                 class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Kontak</a>
         </div>

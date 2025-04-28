@@ -12,4 +12,14 @@ class Disease extends Model
         'solusi',
     ];
 
+    public function fuzzyOutputs()
+    {
+        return $this->hasMany(FuzzyOutput::class, 'disease_id');
+    }
+
+    public function rules() {
+        return $this->hasMany(Rule::class);
+    }
+
+
 }

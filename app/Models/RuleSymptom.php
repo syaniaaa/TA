@@ -12,9 +12,14 @@ class RuleSymptom extends Model
 
     ];
 
-    public function symptom()
+
+    public function rule() {
+        return $this->belongsTo(Rule::class);
+    }
+
+    public function symptoms()
     {
-        return $this->belongsTo(Symptom::class, 'symptom_id');
+        return $this->belongsToMany(Symptom::class, 'rule_symptom');
     }
 
 }

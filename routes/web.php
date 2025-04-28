@@ -6,6 +6,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DiseaseController;
 use App\Http\Controllers\Admin\SymptomController;
 use App\Http\Controllers\Admin\FuzzySetController;
+use App\Http\Controllers\Admin\FuzzyOutputController;
+use App\Http\Controllers\Admin\RuleController;
+use App\Http\Controllers\Admin\RiskController;
 use App\Http\Controllers\Patient\DiagnosisController;
 
 Route::get('/home', function () {
@@ -84,3 +87,28 @@ Route::get('/fuzzy_set/{id}/edit', [FuzzySetController::class, 'edit'])->name('f
 Route::match(['put', 'patch'], '/fuzzy_set/{id}', [FuzzySetController::class, 'update'])->name('fuzzy_set.update');
 Route::delete('/fuzzy_set/{id}', [FuzzySetController::class, 'destroy'])->name('fuzzy_set.destroy');
 Route::get('/fuzzy_set/search', [FuzzySetController::class, 'search'])->name('fuzzy_set.search');
+
+Route::get('/fuzzyOutputs', [FuzzyOutputController::class, 'index'])->name('fuzzy_output');
+Route::get('/fuzzy_output/create', [FuzzyOutputController::class, 'create'])->name('fuzzy_output.create');
+Route::post('/fuzzy_outputs', [FuzzyOutputController::class, 'store'])->name('fuzzy_output.store');
+Route::get('/fuzzy_output/{id}/edit', [FuzzyOutputController::class, 'edit'])->name('fuzzy_output.edit');
+Route::match(['put', 'patch'], '/fuzzy_output/{id}', [FuzzyOutputController::class, 'update'])->name('fuzzy_output.update');
+Route::delete('/fuzzy_output/{id}', [FuzzyOutputController::class, 'destroy'])->name('fuzzy_output.destroy');
+Route::get('/fuzzy_output/search', [FuzzyOutputController::class, 'search'])->name('fuzzy_output.search');
+
+Route::get('/rules', [RuleController::class, 'index'])->name('rule');
+Route::get('/rule/create', [RuleController::class, 'create'])->name('rule.create');
+Route::post('/rules', [RuleController::class, 'store'])->name('rule.store');
+Route::get('/rule/{id}/edit', [RuleController::class, 'edit'])->name('rule.edit');
+Route::match(['put', 'patch'], '/rule/{id}', [RuleController::class, 'update'])->name('rule.update');
+Route::delete('/rule/{id}', [RuleController::class, 'destroy'])->name('rule.destroy');
+Route::get('/rule/search', [RuleController::class, 'search'])->name('rule.search');
+
+
+Route::get('/risks', [RiskController::class, 'index'])->name('risk');
+Route::get('/risk/create', [RiskController::class, 'create'])->name('risk.create');
+Route::post('/risks', [RiskController::class, 'store'])->name('risk.store');
+Route::get('/risk/{id}/edit', [RiskController::class, 'edit'])->name('risk.edit');
+Route::match(['put', 'patch'], '/risk/{id}', [RiskController::class, 'update'])->name('risk.update');
+Route::delete('/risk/{id}', [RiskController::class, 'destroy'])->name('risk.destroy');
+Route::get('/risk/search', [RiskController::class, 'search'])->name('risk.search');

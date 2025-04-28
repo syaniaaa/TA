@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('diagnosis_histories', function (Blueprint $table) {
+        Schema::create('fuzzy_outputs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_pasien', 50);
-            $table->date('tgl_lahir');
-            $table->enum('kelamin', ['Laki-laki', 'Perempuan']);
-            $table->date('tanggal');
-            $table->string('hasil', 50);
-            $table->unsignedBigInteger('user_id');
+            $table->string('kategori', 50);
+            $table->float('min');
+            $table->float('max');
             $table->unsignedBigInteger('disease_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('disease_id')->references('id')->on('diseases')->onDelete('cascade');
             $table->timestamps();
         });
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('diagnosis_histories');
+        Schema::dropIfExists('fuzzy_outputs');
     }
 };

@@ -8,6 +8,7 @@ use App\Models\Rule;
 use App\Models\RuleSymptom;
 use App\Models\Disease;
 use App\Models\Symptom;
+use App\Models\FuzzyOutput;
 
 class RuleController extends Controller
 {
@@ -20,29 +21,48 @@ class RuleController extends Controller
     public function create()
     {
         $data['rules'] = Rule::pluck('nama', 'id');
+        $data['diseases'] = Disease::with('fuzzyOutputs')->get();
+        $data['symptoms'] = Symptom::with('fuzzySets')->get();
+        $data['fuzzyOutput'] = FuzzyOutput::all();
         return view('admin.rules.create', $data);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'keputusan' => 'required|max:50',
+            'nama' => 'required|max:255',
             'disease_id' => 'required|exists:diseases,id',
+            'fuzzy_output_id' => 'required|exists:fuzzy_outputs,id',
         ]);
 
-        Rule::create($validated);
+        // Simpan rule baru
+        $rule = Rule::create([
+            'nama' => $request->nama,
+            'disease_id' => $request->disease_id,
+            // Relasi ke penyakit
+            'fuzzy_output_id' => $request->fuzzy_output_id, // Relasi ke fuzzy output
+        ]);
 
+        // Simpan gejala jika ada
+        if ($request->has('symptom_ids')) {
+            foreach ($request->symptom_ids as $symptom_id) {
+                RuleSymptom::create([
+                    'rule_id' => $rule->id,
+                    'symptom_id' => $symptom_id,
+                ]);
+            }
+        }
+
+        // Simpan notifikasi dan arahkan
         $notification = array(
             'message' => 'Data Aturan berhasil ditambahkan',
             'alert-type' => 'success'
         );
 
-        if ($request->save == true) {
-            return redirect()->route('rule')->with($notification);
-        } else {
-            return redirect()->route('rule.create')->with($notification);
-        }
+        return redirect()->route('rule.index')->with($notification);
     }
+
+
 
     public function edit(string $id)
     {
@@ -56,7 +76,7 @@ class RuleController extends Controller
     {
 
         $validated = $request->validate([
-            'keputusan' => 'required|max:50',
+            'nama' => 'required|max:50',
             'disease_id' => 'required|exists:diseases,id',
         ]);
         Rule::where('id', $id)->update($validated);

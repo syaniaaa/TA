@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DiagnosisHistory extends Model
+class Diagnoses extends Model
 {
     protected $fillable = [
         'nama_pasien',

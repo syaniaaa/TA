@@ -1,50 +1,46 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-poppins font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Kelola Gejala') }}
+            {{ __('Kelola Penyakit') }}
         </h2>
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white light:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-black dark:text-black">
+                    <div class="flex justify-between items-center px-6 py-4">
+                        <x-primary-button tag="a" href="{{ route('symptom.create') }}"
+                            class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-700 text-white text-sm font-semibold rounded-xl shadow-md transition transform hover:scale-105"><svg
+                                class="w-4 h-4 text-gray-100 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="4" d="M5 12h14m-7 7V5" />
+                            </svg>
+                            Tambah</x-primary-button>
 
-                    {{-- search --}}
-                    <form action="{{ route('symptom.search') }}" method="GET" class="py-3 px-4 flex justify-end">
+
                         <div class="relative max-w-xs">
-                            <input type="text" name="query" id="hs-table-search"
-                                class="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                placeholder="Cari">
-                            <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
-                                <svg class="size-4 text-gray-400 dark:text-neutral-500"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <circle cx="11" cy="11" r="8"></circle>
-                                    <path d="m21 21-4.3-4.3"></path>
-                                </svg>
-                            </div>
+                            {{-- Search --}}
+                            <form action="{{ route('symptom.search') }}" method="GET" class="flex">
+                                <div class="relative">
+                                    <input type="text" name="query" id="hs-table-search"
+                                        class="font-poppins text-sm peer py-2 pl-4 pr-10 w-64 border border-gray-300 rounded-full shadow-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-white placeholder-gray-500 dark:placeholder-neutral-500"
+                                        placeholder="Cari penyakit...">
+                                    <button type="submit"
+                                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-blue-600 transition-colors">
+                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-
-                    <div class="mt-4">
-                        @if ($symptoms->isNotEmpty())
-                            @foreach ($symptoms as $symptom)
-                            @endforeach
-                        @else
-                            <p>Gejala Tidak Ada</p>
-                        @endif
                     </div>
-                    {{-- end search --}}
+                    <br>
 
-                    <x-primary-button tag="a" href="{{ route('symptom.create') }}"><svg
-                            class="w-4 h-4 text-gray-100 dark:text-white" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                            viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"
-                                d="M5 12h14m-7 7V5" />
-                        </svg> Tambah</x-primary-button>
-                    <br></br>
                     <x-table>
                         <x-slot name="header">
                             <tr>
@@ -60,27 +56,30 @@
                                 <td>{{ $symptom->nama }}</td>
                                 <td class="flex space-x-2">
                                     <x-tertiary-button tag="a"
-                                        href="{{ route('symptom.edit', $symptom->id) }}"><svg
-                                            class="w-4 h-4 text-gray-100 dark:text-white" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
-                                        </svg>Edit</x-tertiary-button>
+                                        class="inline-flex items-center px-3 py-1 bg-yellow-400 hover:bg-yellow-500 text-white text-sm font-medium rounded-xl shadow-sm transition transform hover:scale-105"
+                                        href="{{ route('symptom.edit', $symptom->id) }}">
+                                        <svg class="w-4 h-4 mr-1 text-white" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15.232 5.232l3.536 3.536M4 20h4l10-10-4-4L4 16v4z" />
+                                        </svg>
+                                        Edit
+                                    </x-tertiary-button>
 
                                     <x-danger-button x-data=""
+                                        class="inline-flex items-center px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm font-medium rounded-xl shadow-sm transition transform hover:scale-105"
                                         x-on:click.prevent="$dispatch('open-modal', 'confirm-menu-deletion')"
-                                        x-on:click="$dispatch('set-action', '{{ route('symptom.destroy', $symptom->id) }}')"><svg
-                                            class="w-4 h-4 text-gray-100 dark:text-white" aria-hidden="true"
+                                        x-on:click="$dispatch('set-action', '{{ route('symptom.destroy', $symptom->id) }}')">
+                                        <svg class="w-4 h-4 text-gray-100 dark:text-white" aria-hidden="true"
                                             xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             fill="none" viewBox="0 0 24 24">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                                 stroke-width="2"
                                                 d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
                                         </svg>
-                                        {{ __('Hapus') }}
+                                        Hapus
                                     </x-danger-button>
+
                                 </td>
                             </tr>
                         @endforeach
