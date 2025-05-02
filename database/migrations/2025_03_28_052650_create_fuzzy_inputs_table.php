@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rule_symptom', function (Blueprint $table) {
+        Schema::create('fuzzy_inputs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rule_id')->constrained('rules')->onDelete('cascade');
-            $table->foreignId('symptom_id')->constrained('symptoms')->onDelete('cascade');
+            $table->string('kategori', 50);
+            $table->float('min');
+            $table->float('max');
+            $table->string('unit',50);
+            $table->unsignedBigInteger('symptom_id');
+            $table->foreign('symptom_id')->references('id')->on('symptoms')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rule_symptom');
+        Schema::dropIfExists('fuzzy_inputs');
     }
 };

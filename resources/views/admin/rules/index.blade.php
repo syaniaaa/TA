@@ -56,11 +56,20 @@
                                 <td>{{ $num++ }} </td>
                                 <td>{{ $rule->nama }}</td>
                                 <td>
-                                    {{ $rule->disease ? $rule->disease->nama : 'No Disease' }}
-                                    {{ $rule->fuzzy_output ? $rule->fuzzy_output->kategori : 'No Fuzzy Output' }}
-                                    {{ $rule->symptom ? $rule->symptom->nama : 'No Symptom' }}
-                                    {{ $rule->fuzzy_set ? $rule->fuzzy_set->kategori : 'No Fuzzy Set' }}
+                                    <div class="text-sm">
+                                        <strong>IF</strong>
+                                        @foreach ($rule->fuzzyInputs as $input)
+                                            {{ $input->symptom->nama ?? 'Unknown Symptom' }} <em>{{ $input->kategori }}</em>
+                                            @if (!$loop->last)
+                                                <strong>AND</strong>
+                                            @endif
+                                        @endforeach
+                                        <strong>THEN</strong>
+                                        {{ $rule->fuzzyOutput->disease->nama ?? 'Unknown Disease' }}
+                                        <em>{{ $rule->fuzzyOutput->kategori ?? '' }}</em>
+                                    </div>
                                 </td>
+
 
                                 <td class="flex space-x-2">
                                     <x-tertiary-button tag="a"

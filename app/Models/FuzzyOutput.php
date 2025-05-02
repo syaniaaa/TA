@@ -13,7 +13,7 @@ class FuzzyOutput extends Model
         'disease_id',
     ];
 
-    public function diseases()
+    public function disease()
     {
         return $this->belongsTo(disease::class, 'disease_id');
     }

@@ -10,16 +10,10 @@ class Symptom extends Model
         'nama',
     ];
 
-    public function fuzzySets()
+    public function fuzzyInputs()
     {
-        return $this->hasMany(FuzzySet::class, 'symptom_id');
+        return $this->hasMany(FuzzyInput::class);
     }
-
-    public function rules()
-    {
-        return $this->belongsToMany(Rule::class, 'rule_symptoms');
-    }
-
 
 
 }

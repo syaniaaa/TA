@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Diagnoses extends Model
+class Diagnosis extends Model
 {
     protected $fillable = [
         'nama_pasien',
@@ -13,6 +13,6 @@ class Diagnoses extends Model
         'tanggal',
         'hasil',
         'user_id',
-        'disease_id',
+        'fuzzy_output_id',
     ];
 }

@@ -4,14 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Disease extends Model
+class FuzzyInputRule extends Model
 {
     protected $fillable = [
-        'nama',
-        'deskripsi',
-        'solusi',
+        'rule_id',
+        'fuzzy_input_id',
     ];
-
-
-
 }

@@ -125,7 +125,7 @@
                     </li>
 
                     <li>
-                        <x-nav-link :href="route('fuzzy_set')" :active="request()->routeIs('fuzzy_set') || request()->routeIs('fuzzy_set.index')">
+                        <x-nav-link :href="route('fuzzy_input')" :active="request()->routeIs('fuzzy_input') || request()->routeIs('fuzzy_input.index')">
                             {{ __('Kelola Aturan Gejala') }}
                         </x-nav-link>
                     </li>
@@ -135,19 +135,19 @@
 
         <li>
             <x-nav-link :href="route('rule')" :active="request()->routeIs('rule') || request()->routeIs('rule.index')">
-                <svg class="size-5 " xmlns="http://www.w3.org/2000/svg"
-                    width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <svg class="size-5 " xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                    viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M18 5V4a1 1 0 0 0-1-1H8.914a1 1 0 0 0-.707.293L4.293 7.207A1 1 0 0 0 4 7.914V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5M9 3v4a1 1 0 0 1-1 1H4m11.383.772 2.745 2.746m1.215-3.906a2.089 2.089 0 0 1 0 2.953l-6.65 6.646L9 17.95l.739-3.692 6.646-6.646a2.087 2.087 0 0 1 2.958 0Z" />
                 </svg>
                 {{ __('Kelola Aturan') }}
             </x-nav-link>
 
-            <li>
-                <x-nav-link :href="route('risk')" :active="request()->routeIs('risk') || request()->routeIs('risk.index')">
-                    <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
+        <li>
+            <x-nav-link :href="route('risk')" :active="request()->routeIs('risk') || request()->routeIs('risk.index')">
+                <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M13 3v4a.997 .997 0 0 0 1 1h4" />
                     <path d="M11 21h-5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v3.5" />
@@ -156,9 +156,9 @@
                     <path d="M8 16.997l2 0" />
                     <path d="M21 15.994c0 4 -2.5 6 -3.5 6s-3.5 -2 -3.5 -6c1 0 2.5 -.5 3.5 -1.5c1 1 2.5 1.5 3.5 1.5" />
                 </svg>
-                    {{ __('Kelola Risiko') }}
-                </x-nav-link>
-            </li>
+                {{ __('Kelola Risiko') }}
+            </x-nav-link>
+        </li>
 
         {{-- <li>
             <div
@@ -181,8 +181,8 @@
         <li>
             <div
                 class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300">
-                <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"
-                    fill="currentColor">
+                <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 16 16" fill="currentColor">
                     <path
                         d="M7.5 5.5a.5.5 0 0 0-1 0v.634l-.549-.317a.5.5 0 1 0-.5.866L6 7l-.549.317a.5.5 0 1 0 .5.866l.549-.317V8.5a.5.5 0 1 0 1 0v-.634l.549.317a.5.5 0 1 0 .5-.866L8 7l.549-.317a.5.5 0 1 0-.5-.866l-.549.317zm-2 4.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z" />
                     <path

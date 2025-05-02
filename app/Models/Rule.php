@@ -8,31 +8,18 @@ class Rule extends Model
 {
     protected $fillable = [
         'nama',
-        'disease_id',
+        'fuzzy_output_id',
     ];
 
-    public function disease()
+    public function fuzzyInputs()
     {
-        return $this->belongsTo(Disease::class);
+        return $this->belongsToMany(FuzzyInput::class, 'fuzzy_input_rule');
     }
 
-    public function symptoms()
+    public function fuzzyOutput()
     {
-        return $this->belongsToMany(Symptom::class, 'rule_symptom');
+        return $this->belongsTo(FuzzyOutput::class);
     }
 
-    public function fuzzyOutputs()
-    {
-        return $this->hasManyThrough(FuzzyOutput::class, Disease::class); 
-    }
-    public function ruleSymptoms()
-    {
-        return $this->hasMany(RuleSymptom::class);
-    }
-
-    public function fuzzy_set()
-    {
-        return $this->belongsTo(FuzzySet::class);
-    }
 
 }

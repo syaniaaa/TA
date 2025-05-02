@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form method="post" action="{{ route('fuzzy_set.store') }}" class="mt-6 space-y-6">
+                    <form method="post" action="{{ route('fuzzy_input.store') }}" class="mt-6 space-y-6">
                         @csrf
 
                         <!-- Input Symptom -->
@@ -63,7 +63,7 @@
 
                         <div>
                             <x-secondary-button tag="a"
-                                href="{{ route('fuzzy_set') }}">Kembali</x-secondary-button>
+                                href="{{ route('fuzzy_input') }}">Kembali</x-secondary-button>
                             <x-primary-button name="save_and_create" value="true">Simpan & Buat</x-primary-button>
                             <x-primary-button name="save" value="true">Simpan</x-primary-button>
                         </div>

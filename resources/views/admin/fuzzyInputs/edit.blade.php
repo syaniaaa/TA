@@ -8,7 +8,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form method="post" action="{{ route('fuzzy_set.update', $fuzzy_set->id) }}" class="mt-6 space-y-6">
+                    <form method="post" action="{{ route('fuzzy_input.update', $fuzzy_input->id) }}" class="mt-6 space-y-6">
                         @csrf
                         @method('PATCH')
 
@@ -17,7 +17,7 @@
                             <select name="symptom_id" id="symptom_id" class="mt-1 block w-full">
                                 @foreach ($symptoms as $id => $nama)
                                     <option value="{{ $id }}"
-                                        {{ $fuzzy_set->symptom_id == $id ? 'selected' : '' }}>
+                                        {{ $fuzzy_input->symptom_id == $id ? 'selected' : '' }}>
                                         {{ $nama }}
                                     </option>
                                 @endforeach
@@ -28,35 +28,35 @@
                         <div class="max-w-xl">
                             <x-input-label for="kategori" value="Kategori" />
                             <x-text-input id="kategori" type="text" name="kategori" class="mt-1 block w-full"
-                                value="{{ old('kategori', $fuzzy_set->kategori) }}" required />
+                                value="{{ old('kategori', $fuzzy_input->kategori) }}" required />
                             <x-input-error class="mt-2" :messages="$errors->get('kategori')" />
                         </div>
 
                         <div class="max-w-xl">
                             <x-input-label for="min" value="Nilai Minimum (min)" />
                             <x-text-input id="min" type="number" step="any" name="min"
-                                class="mt-1 block w-full" value="{{ old('min', $fuzzy_set->min) }}" required />
+                                class="mt-1 block w-full" value="{{ old('min', $fuzzy_input->min) }}" required />
                             <x-input-error class="mt-2" :messages="$errors->get('min')" />
                         </div>
 
                         <div class="max-w-xl">
                             <x-input-label for="max" value="Nilai Maksimum (max)" />
                             <x-text-input id="max" type="number" step="any" name="max"
-                                class="mt-1 block w-full" value="{{ old('max', $fuzzy_set->max) }}" required />
+                                class="mt-1 block w-full" value="{{ old('max', $fuzzy_input->max) }}" required />
                             <x-input-error class="mt-2" :messages="$errors->get('max')" />
                         </div>
 
                         <div class="max-w-xl">
                             <x-input-label for="unit" value="Unit" />
                             <select id="unit" name="unit" class="mt-1 block w-full">
-                                <option value="hari" {{ old('unit', $fuzzy_set->unit) == 'hari' ? 'selected' : '' }}>
+                                <option value="hari" {{ old('unit', $fuzzy_input->unit) == 'hari' ? 'selected' : '' }}>
                                     Hari</option>
-                                <option value="kg" {{ old('unit', $fuzzy_set->unit) == 'kg' ? 'selected' : '' }}>
+                                <option value="kg" {{ old('unit', $fuzzy_input->unit) == 'kg' ? 'selected' : '' }}>
                                     Kilogram (kg)</option>
-                                <option value="cm" {{ old('unit', $fuzzy_set->unit) == 'cm' ? 'selected' : '' }}>
+                                <option value="cm" {{ old('unit', $fuzzy_input->unit) == 'cm' ? 'selected' : '' }}>
                                     Centimeter (cm)</option>
                                 <option value="skala"
-                                    {{ old('unit', $fuzzy_set->unit) == 'skala' ? 'selected' : '' }}>Skala</option>
+                                    {{ old('unit', $fuzzy_input->unit) == 'skala' ? 'selected' : '' }}>Skala</option>
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('unit')" />
                         </div>
@@ -64,7 +64,7 @@
 
                         <div class="flex space-x-2">
                             <x-secondary-button tag="a"
-                                href="{{ route('fuzzy_set') }}">Kembali</x-secondary-button>
+                                href="{{ route('fuzzy_input') }}">Kembali</x-secondary-button>
                             <x-tertiary-button value="true">Update</x-tertiary-button>
                         </div>
                     </form>

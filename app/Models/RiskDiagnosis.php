@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Disease extends Model
+class RiskDiagnosis extends Model
 {
     protected $fillable = [
-        'nama',
-        'deskripsi',
-        'solusi',
+
+        'symptom_id',
+        'diagnosis_id',
+        'hasil',
     ];
-
-
 
 }

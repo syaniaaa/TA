@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('risks', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 200);
+            $table->string('nama');
             $table->float('bobot');
             $table->timestamps();
         });

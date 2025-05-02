@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FuzzySet extends Model
+class FuzzyInput extends Model
 {
     protected $fillable = [
         'kategori',
@@ -14,7 +14,7 @@ class FuzzySet extends Model
         'symptom_id',
     ];
 
-    public function symptoms()
+    public function symptom()
     {
         return $this->belongsTo(Symptom::class, 'symptom_id');
     }

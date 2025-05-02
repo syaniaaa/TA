@@ -10,7 +10,7 @@
                 <div class="bg-white light:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-black dark:text-black">
                         <div class="flex justify-between items-center px-6 py-4">
-                            <x-primary-button tag="a" href="{{ route('fuzzy_set.create') }}"
+                            <x-primary-button tag="a" href="{{ route('fuzzy_input.create') }}"
                                 class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-700 text-white text-sm font-semibold rounded-xl shadow-md transition transform hover:scale-105"><svg
                                     class="w-4 h-4 text-gray-100 dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -23,7 +23,7 @@
 
                             <div class="relative max-w-xs">
                                 {{-- Search --}}
-                                <form action="{{ route('fuzzy_set.search') }}" method="GET" class="flex">
+                                <form action="{{ route('fuzzy_input.search') }}" method="GET" class="flex">
                                     <div class="relative">
                                         <input type="text" name="query" id="hs-table-search"
                                             class="font-poppins text-sm peer py-2 pl-4 pr-10 w-64 border border-gray-300 rounded-full shadow-md transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-white placeholder-gray-500 dark:placeholder-neutral-500"
@@ -53,22 +53,22 @@
                                 </tr>
                                 </x-slot>
                                 @php $num=1; @endphp
-                                @foreach ($fuzzy_sets as $fuzzy_set)
+                                @foreach ($fuzzy_inputs as $fuzzy_input)
                                 <tr>
                                     <td>{{ $num++ }} </td>
-                                    <td>{{ $fuzzy_set->symptoms ? $fuzzy_set->symptoms->nama : 'Gejala tidak ditemukan' }}</td>
-                                    <td>{{ $fuzzy_set->kategori }}</td>
+                                    <td>{{ $fuzzy_input->symptoms ? $fuzzy_input->symptoms->nama : 'Gejala tidak ditemukan' }}</td>
+                                    <td>{{ $fuzzy_input->kategori }}</td>
                                     <td>
-                                        @if($fuzzy_set->max)
-                                            {{ $fuzzy_set->min }} - {{ $fuzzy_set->max }} {{ $fuzzy_set->unit }}
+                                        @if($fuzzy_input->max)
+                                            {{ $fuzzy_input->min }} - {{ $fuzzy_input->max }} {{ $fuzzy_input->unit }}
                                         @else
-                                            > {{ $fuzzy_set->min }} {{ $fuzzy_set->unit }}
+                                            > {{ $fuzzy_input->min }} {{ $fuzzy_input->unit }}
                                         @endif
                                     </td>
                                     <td class="flex space-x-2">
                                         <x-tertiary-button tag="a"
                                             class="inline-flex items-center px-3 py-1 bg-yellow-400 hover:bg-yellow-500 text-white text-sm font-medium rounded-xl shadow-sm transition transform hover:scale-105"
-                                            href="{{ route('fuzzy_set.edit', $fuzzy_set->id) }}">
+                                            href="{{ route('fuzzy_input.edit', $fuzzy_input->id) }}">
                                             <svg class="w-4 h-4 mr-1 text-white" xmlns="http://www.w3.org/2000/svg"
                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -80,7 +80,7 @@
                                         <x-danger-button x-data=""
                                             class="inline-flex items-center px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm font-medium rounded-xl shadow-sm transition transform hover:scale-105"
                                             x-on:click.prevent="$dispatch('open-modal', 'confirm-menu-deletion')"
-                                            x-on:click="$dispatch('set-action', '{{ route('fuzzy_set.destroy', $fuzzy_set->id) }}')">
+                                            x-on:click="$dispatch('set-action', '{{ route('fuzzy_input.destroy', $fuzzy_input->id) }}')">
                                             <svg class="w-4 h-4 text-gray-100 dark:text-white" aria-hidden="true"
                                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 fill="none" viewBox="0 0 24 24">

@@ -4,19 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('fuzzy_sets', function (Blueprint $table) {
+        Schema::create('symptom_diagnosis', function (Blueprint $table) {
             $table->id();
-            $table->string('kategori', 50);
-            $table->float('min');
-            $table->float('max');
-            $table->string('unit',50);
             $table->unsignedBigInteger('symptom_id');
+            $table->unsignedBigInteger('diagnosis_id');
+            $table->decimal('hasil', 5, 2);
+            $table->foreign('diagnosis_id')->references('id')->on('diagnoses')->onDelete('cascade');
             $table->foreign('symptom_id')->references('id')->on('symptoms')->onDelete('cascade');
             $table->timestamps();
         });
@@ -27,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('fuzzy_sets');
+        Schema::dropIfExists('symptom_diagnosis');
     }
 };

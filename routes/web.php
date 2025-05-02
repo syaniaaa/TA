@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DiseaseController;
 use App\Http\Controllers\Admin\SymptomController;
-use App\Http\Controllers\Admin\FuzzySetController;
+use App\Http\Controllers\Admin\FuzzyInputController;
 use App\Http\Controllers\Admin\FuzzyOutputController;
 use App\Http\Controllers\Admin\RuleController;
 use App\Http\Controllers\Admin\RiskController;
@@ -80,13 +80,13 @@ Route::match(['put', 'patch'], '/symptom/{id}', [SymptomController::class, 'upda
 Route::delete('/symptom/{id}', [SymptomController::class, 'destroy'])->name('symptom.destroy');
 Route::get('/symptom/search', [SymptomController::class, 'search'])->name('symptom.search');
 
-Route::get('/fuzzySets', [FuzzySetController::class, 'index'])->name('fuzzy_set');
-Route::get('/fuzzy_set/create', [FuzzySetController::class, 'create'])->name('fuzzy_set.create');
-Route::post('/fuzzy_sets', [FuzzySetController::class, 'store'])->name('fuzzy_set.store');
-Route::get('/fuzzy_set/{id}/edit', [FuzzySetController::class, 'edit'])->name('fuzzy_set.edit');
-Route::match(['put', 'patch'], '/fuzzy_set/{id}', [FuzzySetController::class, 'update'])->name('fuzzy_set.update');
-Route::delete('/fuzzy_set/{id}', [FuzzySetController::class, 'destroy'])->name('fuzzy_set.destroy');
-Route::get('/fuzzy_set/search', [FuzzySetController::class, 'search'])->name('fuzzy_set.search');
+Route::get('/fuzzyInputs', [FuzzyInputController::class, 'index'])->name('fuzzy_input');
+Route::get('/fuzzy_input/create', [FuzzyInputController::class, 'create'])->name('fuzzy_input.create');
+Route::post('/fuzzy_inputs', [FuzzyInputController::class, 'store'])->name('fuzzy_input.store');
+Route::get('/fuzzy_input/{id}/edit', [FuzzyInputController::class, 'edit'])->name('fuzzy_input.edit');
+Route::match(['put', 'patch'], '/fuzzy_input/{id}', [FuzzyInputController::class, 'update'])->name('fuzzy_input.update');
+Route::delete('/fuzzy_input/{id}', [FuzzyInputController::class, 'destroy'])->name('fuzzy_input.destroy');
+Route::get('/fuzzy_input/search', [FuzzyInputController::class, 'search'])->name('fuzzy_input.search');
 
 Route::get('/fuzzyOutputs', [FuzzyOutputController::class, 'index'])->name('fuzzy_output');
 Route::get('/fuzzy_output/create', [FuzzyOutputController::class, 'create'])->name('fuzzy_output.create');

@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('rules', function (Blueprint $table) {
             $table->id();
             $table->string('nama', 20);
-            $table->unsignedBigInteger('disease_id');
+            $table->unsignedBigInteger('fuzzy_output_id');
             $table->timestamps();
-            $table->foreign('disease_id')->references('id')->on('diseases')->onDelete('cascade');
+            $table->foreign('fuzzy_output_id')->references('id')->on('fuzzy_outputs')->onDelete('cascade');
+            
         });
     }
 

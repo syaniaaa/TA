@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Patient;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Symptom;
-use App\Models\FuzzySet;
+use App\Models\FuzzyInput;
 
 
 class DiagnosisController extends Controller
 {
     public function create()
     {
-        $symptoms = Symptom::with('fuzzySets')->get(); // eager load relasi
+        $symptoms = Symptom::with('FuzzyInputs')->get();
         return view('patient.diagnosis.symptomTest', compact('symptoms'));
     }
 

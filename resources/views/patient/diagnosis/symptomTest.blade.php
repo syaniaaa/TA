@@ -48,7 +48,7 @@
 
                 @foreach ($symptoms as $index => $symptom)
                     @php
-                        $fuzzySet = $symptom->fuzzySets->first();
+                        $fuzzyInput = $symptom->fuzzyInputs->first();
                     @endphp
                     <div class="mb-6 border-b pb-4">
                         <label class="block font-semibold text-gray-800 mb-2">
@@ -71,25 +71,31 @@
                             </div>
 
                             <div id="input_{{ $symptom->id }}" class="mt-4 hidden">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
-                                    Berapa
-                                    {{ $fuzzySet->unit == 'skala' ? '(skala 1-10)' : '(' . $fuzzySet->unit . ')' }}
-                                    yang Anda rasakan?
-                                </label>
+                                @if ($fuzzyInput)
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Berapa
+                                        {{ $fuzzyInput->unit == 'skala' ? '(skala 1-10)' : '(' . $fuzzyInput->unit . ')' }}
+                                        yang Anda rasakan?
+                                    </label>
 
-                                <x-text-input id="field_{{ $symptom->id }}" type="number"
-                                    name="jawaban_input[{{ $symptom->id }}]" class="mt-1 block w-full"
-                                    step="{{ $fuzzySet->unit == 'skala' ? 1 : 'any' }}"
-                                    min="{{ $fuzzySet->unit == 'skala' ? 1 : null }}"
-                                    max="{{ $fuzzySet->unit == 'skala' ? 10 : null }}"
-                                    placeholder="{{ $fuzzySet->unit == 'hari'
-                                        ? 'Masukkan jumlah hari'
-                                        : ($fuzzySet->unit == 'kg'
-                                            ? 'Masukkan berat (kg)'
-                                            : ($fuzzySet->unit == 'skala'
-                                                ? 'Masukkan angka antara 1 - 10'
-                                                : 'Masukkan nilai')) }}"
-                                    required />
+                                    <x-text-input id="field_{{ $symptom->id }}" type="number"
+                                        name="jawaban_input[{{ $symptom->id }}]" class="mt-1 block w-full"
+                                        step="{{ $fuzzyInput->unit == 'skala' ? 1 : 'any' }}"
+                                        min="{{ $fuzzyInput->unit == 'skala' ? 1 : null }}"
+                                        max="{{ $fuzzyInput->unit == 'skala' ? 10 : null }}"
+                                        placeholder="{{ $fuzzyInput->unit == 'hari'
+                                            ? 'Masukkan jumlah hari'
+                                            : ($fuzzyInput->unit == 'kg'
+                                                ? 'Masukkan berat (kg)'
+                                                : ($fuzzyInput->unit == 'skala'
+                                                    ? 'Masukkan angka antara 1 - 10'
+                                                    : 'Masukkan nilai')) }}"
+                                        required />
+
+                                    <x-input-error class="mt-2" :messages="$errors->get('jawaban_input.{{ $symptom->id }}')" />
+                                @else
+                                    <p class="text-red-600 text-sm">Tidak ada input fuzzy untuk gejala ini.</p>
+                                @endif
 
                                 <x-input-error class="mt-2" :messages="$errors->get('jawaban_input.{{ $symptom->id }}')" />
                             </div>
