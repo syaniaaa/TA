@@ -30,7 +30,7 @@
                 request()->is('result')">
                 3
             </x-stepper-link>
-            Tes Risiko
+            Tes Faktor Risiko
         </div>
     </li>
 

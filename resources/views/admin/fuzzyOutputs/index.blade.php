@@ -2,7 +2,7 @@
     <x-app-layout>
         <x-slot name="header">
             <h2 class="font-poppins font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Kelola Aturan Penyakit') }}
+                {{ __('Kelola Bobot Penyakit') }}
             </h2>
         </x-slot>
         <div class="py-12">
@@ -56,13 +56,13 @@
                                 @foreach ($fuzzy_outputs as $fuzzy_output)
                                 <tr>
                                     <td>{{ $num++ }} </td>
-                                    <td>{{ $fuzzy_output->diseases ? $fuzzy_output->diseases->nama : 'Penyakit tidak ditemukan' }}</td>
-                                    <td>{{ $fuzzy_output->kategori }}</td>
+                                    <td>{{ $fuzzy_output->disease ? $fuzzy_output->disease->nama : 'Penyakit tidak ditemukan' }}</td>
+                                    <td>{{ ucfirst($fuzzy_output->kategori) }}</td>
                                     <td>
                                         @if($fuzzy_output->max)
-                                            {{ $fuzzy_output->min }} - {{ $fuzzy_output->max }} 
+                                            {{ $fuzzy_output->min }} - {{ $fuzzy_output->max }}
                                         @else
-                                            > {{ $fuzzy_output->min }} 
+                                            > {{ $fuzzy_output->min }}
                                         @endif
                                     </td>
                                     <td class="flex space-x-2">

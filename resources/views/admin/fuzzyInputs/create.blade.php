@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Kelola Fuzzy Set') }}
+            {{ __('Kelola Bobot Gejala') }}
         </h2>
     </x-slot>
 
@@ -27,8 +27,11 @@
                         <!-- Input Kategori -->
                         <div class="max-w-xl">
                             <x-input-label for="kategori" value="Kategori" />
-                            <x-text-input id="kategori" type="text" name="kategori" class="mt-1 block w-full"
-                                value="{{ old('kategori') }}" required />
+                            <select id="kategori" name="kategori" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-200">
+                                <option value="">-- Pilih Kategori --</option>
+                                <option value="ringan" {{ old('kategori') == 'ringan' ? 'selected' : '' }}>Ringan</option>
+                                <option value="berat" {{ old('kategori') == 'berat' ? 'selected' : '' }}>Berat</option>
+                            </select>
                             <x-input-error class="mt-2" :messages="$errors->get('kategori')" />
                         </div>
 

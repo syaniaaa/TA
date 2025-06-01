@@ -24,17 +24,19 @@
                             @foreach ($fuzzy_inputs as $input)
                                 <div class="flex items-center space-x-4 mt-2">
                                     <label class="w-1/2">{{ $input->symptom->nama ?? 'Nama Gejala' }}</label>
-                                    <input type="checkbox" name="fuzzy_input_ids[]" value="{{ $input->id }}">
+                                    <input type="checkbox" name="fuzzy_input_ids[]" value="{{ $input->id }}"
+                                        class="form-checkbox h-5 w-5 text-green-600 transition duration-150 ease-in-out">
                                     <span>{{ $input->kategori }}</span>
                                 </div>
                             @endforeach
                             <x-input-error class="mt-2" :messages="$errors->get('fuzzy_input_ids')" />
                         </div>
 
-                    
+
                         <div class="max-w-xl mt-6">
                             <x-input-label for="fuzzy_output_id" value="Penyakit & Kategori" />
-                            <select name="fuzzy_output_id" class="mt-1 block w-full rounded border-gray-300 dark:bg-gray-700" required>
+                            <select name="fuzzy_output_id"
+                                class="mt-1 block w-full rounded border-gray-300 dark:bg-gray-700" required>
                                 <option value="">Pilih Penyakit</option>
                                 @foreach ($fuzzy_outputs as $output)
                                     <option value="{{ $output->id }}">
@@ -47,8 +49,7 @@
 
 
                         <div>
-                            <x-secondary-button tag="a"
-                                href="{{ route('rule') }}">Kembali</x-secondary-button>
+                            <x-secondary-button tag="a" href="{{ route('rule') }}">Kembali</x-secondary-button>
                             <x-primary-button name="save_and_create" value="true">Simpan & Buat</x-primary-button>
                             <x-primary-button name="save" value="true">Simpan</x-primary-button>
                         </div>

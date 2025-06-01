@@ -188,8 +188,21 @@
                     <path
                         d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
                 </svg>
-                Rekam Medis
+                Hasil Diagnosis
             </div>
+        </li>
+
+        <li>
+            {{-- <x-nav-link :href="route('report')" :active="request()->routeIs('report') || request()->routeIs('report.index')"> --}}
+                <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667" />
+                </svg>
+                Laporan
+
+                {{-- {{ __('Laporan') }} --}}
+            {{-- </x-nav-link> --}}
         </li>
 
         <div class="hidden border-b border-dashed lg:block dark:border-neutral-700/70 border-neutral-500"></div>

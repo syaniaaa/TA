@@ -38,6 +38,8 @@ Route::get('/result', function () {
 
 Route::get('/symptomTest', [DiagnosisController::class, 'create'])->name('diagnosis.symptomTest');
 Route::post('/symptomTest', [DiagnosisController::class, 'store'])->name('diagnosis.symptomTest.store');
+Route::get('/riskTest', [DiagnosisController::class, 'create3'])->name('diagnosis.riskTest');
+Route::post('/riskTest', [DiagnosisController::class, 'store3'])->name('diagnosis.riskTest.store3');
 
 
 

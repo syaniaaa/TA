@@ -54,7 +54,6 @@
                 <form action="/profile" method="POST" class="space-y-6">
                     @csrf
 
-                    <!-- Nama -->
                     <div>
                         <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama</label>
                         <input type="text" id="nama" name="nama"
@@ -65,7 +64,6 @@
                         @enderror
                     </div>
 
-                    <!-- Tanggal Lahir -->
                     <div>
                         <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700 mb-1">Tanggal
                             Lahir</label>
@@ -77,7 +75,6 @@
                         @enderror
                     </div>
 
-                    <!-- Jenis Kelamin -->
                     <div>
                         <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700 mb-1">Jenis
                             Kelamin</label>
@@ -94,15 +91,7 @@
                         @enderror
                     </div>
 
-                    <!-- Tombol Simpan & Lanjutkan -->
-                    <div class="pt-4 flex flex-col sm:flex-row sm:justify-between gap-4">
-                        <!-- Tombol Simpan -->
-                        <button type="submit"
-                            class="w-full sm:w-auto bg-green-600 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-xl transition duration-200">
-                            Simpan
-                        </button>
-
-                        <!-- Tombol Lanjutkan -->
+                    <div class="pt-4 flex flex-col sm:flex-row sm:justify-end gap-4">
                         <a href="{{ route('diagnosis.symptomTest') }}"
                             class="w-full sm:w-auto text-center bg-white hover:bg-green-300 text-green-600 font-semibold py-2 px-6 rounded-xl transition duration-200
                         shadow-lg hover:shadow-2xl outline-none hover:outline-2 hover:outline-green-600">
@@ -112,7 +101,6 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"></path>
                             </svg>
                         </a>
-
                     </div>
 
                 </form>

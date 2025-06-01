@@ -12,6 +12,4 @@ class Disease extends Model
         'solusi',
     ];
 
-
-
 }
