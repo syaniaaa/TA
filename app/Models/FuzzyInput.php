@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FuzzyInput extends Model
 {
     protected $fillable = [
-        'kategori',
+        'himpunan',
         'min',
         'max',
         'unit',

@@ -28,18 +28,15 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Admin
+        
         if (Auth::user()->role_id === 1) {
-            return redirect()->intended(route('dashboard', absolute: false));
-            // dokter
+            return redirect()->intended(route('dashboard'));
         } elseif (Auth::user()->role_id === 2) {
-            return redirect()->intended(route('dokter.dashboard', absolute: false));
-            // pasien
-        } elseif (Auth::user()->role_id === 3) {
-            return redirect()->intended(route('home', absolute: false));
+            return redirect()->intended(route('home'));
         } else {
-            return redirect()->intended(route('home', absolute: false));
+            return redirect()->intended(route('home'));
         }
+
     }
 
 

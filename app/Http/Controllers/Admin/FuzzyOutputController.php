@@ -18,14 +18,14 @@ class FuzzyOutputController extends Controller
     public function create()
     {
         $data['diseases'] = Disease::pluck('nama', 'id');
-        $data['fuzzy_outputs'] = FuzzyOutput::pluck('kategori', 'id');
+        $data['fuzzy_outputs'] = FuzzyOutput::pluck('himpunan', 'id');
         return view('admin.fuzzyOutputs.create', $data);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'kategori' => 'required|max:50',
+            'himpunan' => 'required|max:50',
             'min' => 'required|numeric',
             'max' => 'required|numeric|gte:min',
             'disease_id' => 'required|exists:diseases,id',
@@ -57,7 +57,7 @@ class FuzzyOutputController extends Controller
     {
 
         $validated = $request->validate([
-            'kategori' => 'required|max:50',
+            'himpunan' => 'required|max:50',
             'min' => 'required|numeric',
             'max' => 'required|numeric|gte:min',
             'disease_id' => 'required|exists:diseases,id',
@@ -87,7 +87,7 @@ class FuzzyOutputController extends Controller
     {
         $query = $request->input('query');
 
-        $fuzzy_outputs = FuzzyOutput::where('kategori', 'like', "%{$query}%")->get();
+        $fuzzy_outputs = FuzzyOutput::where('himpunan', 'like', "%{$query}%")->get();
 
         return view('admin.fuzzyOutputs.index', compact('fuzzy_outputs'));
     }

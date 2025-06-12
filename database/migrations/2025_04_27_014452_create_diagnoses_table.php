@@ -12,11 +12,9 @@ return new class extends Migration {
     {
         Schema::create('diagnoses', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_pasien', 100);
-            $table->date('tgl_lahir');
-            $table->enum('kelamin', ['Laki-laki', 'Perempuan']);
             $table->date('tanggal');
             $table->decimal('hasil', 5, 2);
+            $table->decimal('hasil_fuzzy', 5, 2);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('fuzzy_output_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -45,6 +45,7 @@
                         <x-slot name="header">
                             <tr>
                                 <th>No</th>
+                                <th>Kode Penyakit</th>
                                 <th>Nama</th>
                                 <th>Deskripsi</th>
                                 <th>Solusi</th>
@@ -55,6 +56,7 @@
                         @foreach ($diseases as $disease)
                             <tr>
                                 <td>{{ $num++ }} </td>
+                                <td>{{ $disease->kode_penyakit }}</td>
                                 <td>{{ $disease->nama }}</td>
                                 <td>{{ $disease->deskripsi }}</td>
                                 <td>{{ $disease->solusi }}</td>

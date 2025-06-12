@@ -26,10 +26,10 @@
                         </div>
 
                         <div class="max-w-xl">
-                            <x-input-label for="kategori" value="Kategori" />
-                            <x-text-input id="kategori" type="text" name="kategori" class="mt-1 block w-full"
-                                value="{{ old('kategori', $fuzzy_output->kategori) }}" required />
-                            <x-input-error class="mt-2" :messages="$errors->get('kategori')" />
+                            <x-input-label for="himpunan" value="Himpunan" />
+                            <x-text-input id="himpunan" type="text" name="himpunan" class="mt-1 block w-full"
+                                value="{{ old('himpunan', $fuzzy_output->himpunan) }}" required />
+                            <x-input-error class="mt-2" :messages="$errors->get('himpunan')" />
                         </div>
 
                         <div class="max-w-xl">

@@ -19,17 +19,17 @@ Route::get('/', function () {
     return view('home');
 })->name('homepage');
 
-Route::get('/patientData', function () {
-    return view('patient.diagnosis.patientData');
-});
+Route::get('/question', function () {
+    return view('patient.question');
+})->name('question');
 
-// Route::get('/symptom', function () {
-//     return view('patient.diagnosis.symptom');
-// })->name('diagnosis.symptom');
+Route::get('/aboutUs', function () {
+    return view('patient.aboutUs');
+})->name('aboutUs');
 
-Route::get('/riskTest', function () {
-    return view('patient.diagnosis.riskTest');
-})->name('diagnosis.riskTest');
+Route::get('/history', function () {
+    return view('patient.diagnosisHistory.history');
+})->name('history');
 
 Route::get('/result', function () {
     return view('patient.diagnosis.result');

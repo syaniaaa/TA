@@ -18,14 +18,14 @@ class FuzzyInputController extends Controller
     public function create()
     {
         $data['symptoms'] = Symptom::pluck('nama', 'id');
-        $data['fuzzy_inputs'] = FuzzyInput::pluck('kategori', 'id');
+        $data['fuzzy_inputs'] = FuzzyInput::pluck('himpunan', 'id');
         return view('admin.FuzzyInputs.create', $data);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'kategori' => 'required|max:50',
+            'himpunan' => 'required|max:50',
             'min' => 'required|numeric',
             'max' => 'required|numeric|gte:min',
             'unit' => 'required|max:50',
@@ -58,7 +58,7 @@ class FuzzyInputController extends Controller
     {
 
         $validated = $request->validate([
-            'kategori' => 'required|max:50',
+            'himpunan' => 'required|max:50',
             'min' => 'required|numeric',
             'max' => 'required|numeric|gte:min',
             'unit' => 'required|max:50',
@@ -89,7 +89,7 @@ class FuzzyInputController extends Controller
     {
         $query = $request->input('query');
 
-        $fuzzy_inputs = FuzzyInput::where('kategori', 'like', "%{$query}%")->get();
+        $fuzzy_inputs = FuzzyInput::where('himpunan', 'like', "%{$query}%")->get();
 
         return view('admin.FuzzyInputs.index', compact('fuzzy_inputs'));
     }

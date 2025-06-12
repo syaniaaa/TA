@@ -47,7 +47,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Gejala</th>
-                                    <th>Kategori</th>
+                                    <th>Himpunan</th>
                                     <th>Domain</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -57,7 +57,7 @@
                                 <tr>
                                     <td>{{ $num++ }} </td>
                                     <td>{{ $fuzzy_input->symptom ? $fuzzy_input->symptom->nama : 'Gejala tidak ditemukan' }}</td>
-                                    <td>{{ ucfirst($fuzzy_input->kategori) }}</td>
+                                    <td>{{ $fuzzy_input->himpunan}}</td>
                                     <td>
                                         @if($fuzzy_input->max)
                                             {{ $fuzzy_input->min }} - {{ $fuzzy_input->max }} {{ $fuzzy_input->unit }}

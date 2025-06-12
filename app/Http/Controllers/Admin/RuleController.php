@@ -24,26 +24,21 @@ class RuleController extends Controller
         $fuzzy_inputs = FuzzyInput::with('symptom')->get();
         $fuzzy_outputs = FuzzyOutput::with('disease')->get();
 
-
-        $lastRule = Rule::orderBy('id', 'desc')->first();
-        $nextRuleNumber = $lastRule ? (int) filter_var($lastRule->nama, FILTER_SANITIZE_NUMBER_INT) + 1 : 1;
-        $nextRuleName = 'Rule ' . $nextRuleNumber;
-
-        return view('admin.rules.create', compact('fuzzy_inputs', 'fuzzy_outputs', 'nextRuleName'));
+        return view('admin.rules.create', compact('fuzzy_inputs', 'fuzzy_outputs'));
 
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama' => 'required|max:50',
+            'kode_aturan' => 'required|max:10|unique:rules,kode_aturan',
             'fuzzy_output_id' => 'required|exists:fuzzy_outputs,id',
             'fuzzy_input_ids' => 'required|array|min:1',
             'fuzzy_input_ids.*' => 'exists:fuzzy_inputs,id',
         ]);
 
         $rule = Rule::create([
-            'nama' => $validated['nama'],
+            'kode_aturan' => $validated['kode_aturan'],
             'fuzzy_output_id' => $validated['fuzzy_output_id'],
         ]);
 
@@ -62,6 +57,7 @@ class RuleController extends Controller
     }
 
 
+
     public function edit($id)
     {
         $rule = Rule::with('fuzzyInputs')->findOrFail($id);
@@ -75,7 +71,7 @@ class RuleController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'nama' => 'required|max:50',
+            'kode_aturan' => 'required|max:10|unique:rules,kode_aturan',
             'fuzzy_output_id' => 'required|exists:fuzzy_outputs,id',
             'fuzzy_input_ids' => 'required|array|min:1',
             'fuzzy_input_ids.*' => 'exists:fuzzy_inputs,id',
@@ -84,7 +80,7 @@ class RuleController extends Controller
         $rule = Rule::findOrFail($id);
 
         $rule->update([
-            'nama' => $validated['nama'],
+            'kode_aturan' => $validated['kode_aturan'],
             'fuzzy_output_id' => $validated['fuzzy_output_id'],
         ]);
 
@@ -119,7 +115,7 @@ class RuleController extends Controller
     {
         $query = $request->input('query');
 
-        $rules = Rule::where('nama', 'like', "%{$query}%")->get();
+        $rules = Rule::where('kode_aturan', 'like', "%{$query}%")->get();
 
         return view('admin.rules.index', compact('rules'));
     }

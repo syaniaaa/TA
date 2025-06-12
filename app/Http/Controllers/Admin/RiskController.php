@@ -23,6 +23,7 @@ class RiskController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'kode_risiko' => 'required|max:10|unique:risks,kode_risiko',
             'nama' => 'required|max:200',
             'bobot' => 'required|numeric|min:0',
 
@@ -54,6 +55,7 @@ class RiskController extends Controller
     {
 
         $validated = $request->validate([
+            'kode_risiko' => 'required|max:10|unique:risks,kode_risiko',
             'nama' => 'required|max:200',
             'bobot' => 'required|numeric|min:0',
 

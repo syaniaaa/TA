@@ -18,6 +18,21 @@
                             <x-input-error class="mt-2" :messages="$errors->get('name')" />
                         </div>
                         <div class="max-w-xl">
+                            <x-input-label for="tgl_lahir" value="Tanggal Lahir" />
+                            <x-text-input id="tgl_lahir" type="text" name="tgl_lahir" class="mt-1 block w-full"
+                                value="{{ old('tgl_lahir') }}" required />
+                            <x-input-error class="mt-2" :messages="$errors->get('tgl_lahir')" />
+                        </div>
+                        <div class="max-w-xl mt-4">
+                            <x-input-label for="kelamin" value="Jenis Kelamin" />
+                            <select id="kelamin" name="kelamin" class="mt-1 block w-full" required>
+                                <option value="">-- Pilih Jenis Kelamin --</option>
+                                <option value="Laki-laki" {{ old('kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                <option value="Perempuan" {{ old('kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                            </select>
+                            <x-input-error class="mt-2" :messages="$errors->get('kelamin')" />
+                        </div>
+                        <div class="max-w-xl">
                             <x-input-label for="email" value="Email" />
                             <x-text-input id="email" type="email" name="email" class="mt-1 block w-full"
                                 value="{{ old('email') }}" required />
@@ -28,6 +43,12 @@
                             <x-text-input id="phone_number" type="text" name="phone_number" class="mt-1 block w-full"
                                 value="{{ old('phone_number') }}" required />
                             <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+                        </div>
+                        <div class="max-w-xl">
+                            <x-input-label for="alamat" value="Alamat" />
+                            <x-text-input id="alamat" type="text" name="alamat" class="mt-1 block w-full"
+                                value="{{ old('alamat') }}" required />
+                            <x-input-error class="mt-2" :messages="$errors->get('alamat')" />
                         </div>
                         <div class="max-w-xl text-white">
                             <x-input-label for="password" value="Password" />

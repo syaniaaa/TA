@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('risks', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_risiko', 10)->unique();
             $table->string('nama');
             $table->float('bobot');
             $table->timestamps();

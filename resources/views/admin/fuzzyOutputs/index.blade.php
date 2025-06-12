@@ -47,7 +47,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Penyakit</th>
-                                    <th>Kategori</th>
+                                    <th>Himpunan</th>
                                     <th>Domain</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -57,7 +57,7 @@
                                 <tr>
                                     <td>{{ $num++ }} </td>
                                     <td>{{ $fuzzy_output->disease ? $fuzzy_output->disease->nama : 'Penyakit tidak ditemukan' }}</td>
-                                    <td>{{ ucfirst($fuzzy_output->kategori) }}</td>
+                                    <td>{{ $fuzzy_output->himpunan }}</td>
                                     <td>
                                         @if($fuzzy_output->max)
                                             {{ $fuzzy_output->min }} - {{ $fuzzy_output->max }}

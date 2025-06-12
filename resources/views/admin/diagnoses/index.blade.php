@@ -14,8 +14,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
-                                    <th>Tanggal Lahir</th>
-                                    <th>Jenis Kelamin</th>
                                     <th>Tanggal Tes</th>
                                     <th>Hasil</th>
                                     <th>Aksi</th>

@@ -13,10 +13,27 @@
                         @csrf
                         @method('PATCH')
                         <div class="max-w-xl">
+                            <x-input-label for="kode_gejala" value="Kode Gejala" />
+                            <x-text-input id="kode_gejala" type="text" name="kode_gejala" class="mt-1 block w-full"
+                                value="{{ old('kode_gejala', $symptom->kode_gejala) }}" required />
+                            <x-input-error class="mt-2" :messages="$errors->get('kode_gejala')" />
+                        </div>
+
+                        <div class="max-w-xl">
                             <x-input-label for="nama" value="Nama" />
                             <x-text-input id="nama" type="text" name="nama" class="mt-1 block w-full"
                                 value="{{ old('nama', $symptom->nama) }}" required />
                             <x-input-error class="mt-2" :messages="$errors->get('nama')" />
+                        </div>
+
+                        <div class="max-w-xl mt-4">
+                            <x-input-label for="jenis_gejala" value="Jenis Gejala" />
+                            <select id="jenis_gejala" name="jenis_gejala" class="mt-1 block w-full" required>
+                                <option value="">-- Pilih Jenis Gejala --</option>
+                                <option value="Khusus" {{ old('jenis_gejala', $symptom->jenis_gejala) == 'Khusus' ? 'selected' : '' }}>Khusus</option>
+                                <option value="Umum" {{ old('jenis_gejala', $symptom->jenis_gejala) == 'Umum' ? 'selected' : '' }}>Umum</option>
+                            </select>
+                            <x-input-error class="mt-2" :messages="$errors->get('jenis_gejala')" />
                         </div>
 
                         <x-secondary-button tag="a"

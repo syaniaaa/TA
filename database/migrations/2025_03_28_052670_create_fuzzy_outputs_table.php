@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('fuzzy_outputs', function (Blueprint $table) {
             $table->id();
-            $table->string('kategori', 50);
+            $table->string('himpunan', 50);
             $table->float('min');
             $table->float('max');
             $table->unsignedBigInteger('disease_id');

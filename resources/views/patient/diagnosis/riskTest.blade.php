@@ -15,7 +15,7 @@
     <div class="mt-24">
 
         <section class="p-10 text-center shadow-md rounded-xl mx-4 lg:mx-24 bg-no-repeat bg-cover bg-center"
-            style="background-image: linear-gradient(to right, rgba(32, 232, 152))">
+            style="background-image: linear-gradient(to right, rgba(20, 139, 64, 0.9), rgba(78, 228, 40, 0.9))">
             <h1 class="text-2xl lg:text-4xl font-extrabold text-gray-100">
                 Tes Diagnosis Tuberkulosis (TB)
             </h1>
@@ -28,26 +28,6 @@
 
             </div>
         </section>
-
-        {{-- <section class="mt-10 px-10">
-            <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md">
-                <h2 class="text-xl font-semibold mb-4 text-gray-700">Pilih Risiko yang Diketahui</h2>
-                <form method="POST" action="#">
-                    <div class="space-y-4 text-gray-800">
-                        <label class="flex items-center space-x-3">
-                            <input type="checkbox" name="risiko[]" value="HIV/AIDS"
-                                class="form-checkbox h-5 w-5 text-green-600 transition duration-150 ease-in-out">
-                            <span class="text-sm">HIV/AIDS</span>
-                        </label>
-                        <label class="flex items-center space-x-3">
-                            <input type="checkbox" name="risiko[]" value="Tempat tinggal"
-                                class="form-checkbox h-5 w-5 text-green-600 transition duration-150 ease-in-out">
-                            <span class="text-sm">Tempat tinggal</span>
-                        </label>
-                    </div>
-                </form>
-            </div>
-        </section> --}}
 
         <section class="mt-10 px-10">
             <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md">

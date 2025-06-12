@@ -23,6 +23,7 @@ class DiseaseController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'kode_penyakit' => 'required|max:10|unique:diseases,kode_penyakit',
             'nama' => 'required|max:50',
             'deskripsi' => 'required|max:200',
             'solusi' => 'required|max:200',
@@ -54,6 +55,7 @@ class DiseaseController extends Controller
     {
 
         $validated = $request->validate([
+            'kode_penyakit' => 'required|max:10|unique:diseases,kode_penyakit',
             'nama' => 'required|max:50',
             'deskripsi' => 'required|max:200',
             'solusi' => 'required|max:200',

@@ -13,6 +13,13 @@
                         @csrf
                         @method('PATCH')
                         <div class="max-w-xl">
+                            <x-input-label for="kode_risiko" value="Kode Risiko" />
+                            <x-text-input id="kode_risiko" type="text" name="kode_risiko" class="mt-1 block w-full"
+                                value="{{ old('kode_risiko', $risk->kode_risiko) }}" required />
+                            <x-input-error class="mt-2" :messages="$errors->get('kode_risiko')" />
+                        </div>
+
+                        <div class="max-w-xl">
                             <x-input-label for="nama" value="Nama" />
                             <x-text-input id="nama" type="text" name="nama" class="mt-1 block w-full"
                                 value="{{ old('nama', $risk->nama) }}" required />

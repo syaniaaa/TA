@@ -8,21 +8,20 @@
         </div>
 
         <!-- Menu Desktop -->
-        <div class="font-poppins hidden md:flex space-x-6 items-center">
+        <div class="font-poppins hidden md:flex space-x-8 items-center">
             <a href="/home"
                 class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Beranda</a>
-            <a href="/informasi"
-                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Informasi</a>
-                <a href="/patientData"
+            <a href="/symptomTest"
                 class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">
                 Diagnosis </a>
-            <a href="/diagnosis"
-                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Riwayat Diagnosis</a>
-            {{-- <a href="/diagnosis"
-                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Tentang
-                Kami</a> --}}
-            <a href="/kontak"
-                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Kontak</a>
+            <a href="/history"
+                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Riwayat
+                Diagnosis</a>
+            <a href="/question"
+                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Tanya
+                Jawab Seputar TB</a>
+            <a href="/aboutUs"
+                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Tentang</a>
         </div>
 
         <!-- Login / Logout -->

@@ -1,5 +1,5 @@
 <footer class="bg-gradient-to-r"
-    style="background: linear-gradient(to right, rgba(20, 139, 64, 0.9), rgba(89, 226, 55, 0.9)); color: white; padding: 2rem 0; margin-top: 5rem; box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1);">
+    style="background-color: #148b40; color: white; padding: 2rem 0; margin-top: 5rem; box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row justify-between items-start text-center md:text-left gap-8">
 

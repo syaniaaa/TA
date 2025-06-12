@@ -24,20 +24,12 @@
                             <x-input-error class="mt-2" :messages="$errors->get('disease_id')" />
                         </div>
 
-                        <!-- Input Kategori -->
+                        <!-- Input Himpunan -->
                         <div class="max-w-xl">
-                            <x-input-label for="kategori" value="Kategori" />
-                            <select id="kategori" name="kategori"
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-200"
-                                required>
-                                <option value="rendah" {{ old('kategori') == 'rendah' ? 'selected' : '' }}>Rendah
-                                </option>
-                                <option value="sedang" {{ old('kategori') == 'sedang' ? 'selected' : '' }}>Sedang
-                                </option>
-                                <option value="tinggi" {{ old('kategori') == 'tinggi' ? 'selected' : '' }}>Tinggi
-                                </option>
-                            </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('kategori')" />
+                            <x-input-label for="himpunan" value="Himpunan" />
+                            <x-text-input id="himpunan" type="text" name="himpunan" class="mt-1 block w-full"
+                                value="{{ old('himpunan') }}" required maxlength="50" />
+                            <x-input-error class="mt-2" :messages="$errors->get('himpunan')" />
                         </div>
 
 

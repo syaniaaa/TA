@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('rules', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 20);
+            $table->string('kode_aturan', 10)->unique();
             $table->unsignedBigInteger('fuzzy_output_id');
             $table->timestamps();
             $table->foreign('fuzzy_output_id')->references('id')->on('fuzzy_outputs')->onDelete('cascade');
-            
+
         });
     }
 

@@ -45,7 +45,7 @@
                         <x-slot name="header">
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
+                                <th>Kode Aturan</th>
                                 <th>Aturan</th>
                                 <th>Aksi</th>
                             </tr>
@@ -54,19 +54,19 @@
                         @foreach ($rules as $rule)
                             <tr>
                                 <td>{{ $num++ }} </td>
-                                <td>{{ $rule->nama }}</td>
+                                <td>{{ $rule->kode_aturan }}</td>
                                 <td>
                                     <div class="text-sm">
                                         <strong>IF</strong>
                                         @foreach ($rule->fuzzyInputs as $input)
-                                            {{ $input->symptom->nama ?? 'Unknown Symptom' }} <em>{{ $input->kategori }}</em>
+                                            {{ $input->symptom->nama ?? 'Unknown Symptom' }} <em>{{ $input->himpunan }}</em>
                                             @if (!$loop->last)
                                                 <strong>AND</strong>
                                             @endif
                                         @endforeach
                                         <strong>THEN</strong>
                                         {{ $rule->fuzzyOutput->disease->nama ?? 'Unknown Disease' }}
-                                        <em>{{ $rule->fuzzyOutput->kategori ?? '' }}</em>
+                                        <em>{{ $rule->fuzzyOutput->himpunan ?? '' }}</em>
                                     </div>
                                 </td>
 

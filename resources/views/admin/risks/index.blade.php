@@ -45,6 +45,7 @@
                         <x-slot name="header">
                             <tr>
                                 <th>No</th>
+                                <th>Kode Risiko</th>
                                 <th>Nama</th>
                                 <th>Bobot</th>
                                 <th>Aksi</th>
@@ -54,6 +55,7 @@
                         @foreach ($risks as $risk)
                             <tr>
                                 <td>{{ $num++ }} </td>
+                                <td>{{ $risk->kode_risiko }}</td>
                                 <td>{{ $risk->nama }}</td>
                                 <td>{{ $risk->bobot }}</td>
                                 <td class="flex space-x-2">

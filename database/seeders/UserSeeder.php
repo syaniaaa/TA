@@ -22,19 +22,12 @@ class UserSeeder extends Seeder
                 'name' => 'admin',
                 'email' => 'admin@gmail.com',
                 'phone_number' => '085860459990',
-                'address' => 'Mangunkerta',
+                'alamat' => 'Mangunkerta',
+                'tgl_lahir' => '2000-12-12',
+                'kelamin' => 'Perempuan',
                 'password' => Hash::make('12345678'),
                 'remember_token' => Str::random(10),
                 'role_id' => 1,
-            ],
-            [
-                'name' => 'dokter',
-                'email' => 'dokter@gmail.com',
-                'phone_number' => '085870408890',
-                'address' => 'Mangunkerta',
-                'password' => Hash::make('12345678'),
-                'remember_token' => Str::random(10),
-                'role_id' => 2,
             ],
         ]);
     }

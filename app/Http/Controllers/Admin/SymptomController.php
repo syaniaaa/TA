@@ -23,7 +23,10 @@ class SymptomController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'kode_gejala' => 'required|max:10|unique:symptoms,kode_gejala',
             'nama' => 'required|max:50',
+            'jenis_gejala' => ['required', 'string', 'in:Khusus,Umum', 'max:50'],
+
         ]);
 
         Symptom::create($validated);
@@ -52,7 +55,10 @@ class SymptomController extends Controller
     {
 
         $validated = $request->validate([
+            'kode_gejala' => 'required|max:10|unique:symptoms,kode_gejala',
             'nama' => 'required|max:50',
+            'jenis_gejala' => ['required', 'string', 'in:Khusus,Umum', 'max:50'],
+
         ]);
         Symptom::where('id', $id)->update($validated);
         $notification = array(

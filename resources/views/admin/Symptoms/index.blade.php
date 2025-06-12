@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-poppins font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Kelola Penyakit') }}
+            {{ __('Kelola Gejala') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -45,7 +45,9 @@
                         <x-slot name="header">
                             <tr>
                                 <th>No</th>
+                                <th>Kode Gejala</th>
                                 <th>Nama</th>
+                                <th>Jenis Gejala</th>
                                 <th>Aksi</th>
                             </tr>
                         </x-slot>
@@ -53,7 +55,9 @@
                         @foreach ($symptoms as $symptom)
                             <tr>
                                 <td>{{ $num++ }} </td>
+                                <td>{{ $symptom->kode_gejala }}</td>
                                 <td>{{ $symptom->nama }}</td>
+                                <td>{{ $symptom->jenis_gejala }}</td>
                                 <td class="flex space-x-2">
                                     <x-tertiary-button tag="a"
                                         class="inline-flex items-center px-3 py-1 bg-yellow-400 hover:bg-yellow-500 text-white text-sm font-medium rounded-xl shadow-sm transition transform hover:scale-105"

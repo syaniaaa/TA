@@ -25,7 +25,7 @@
                 Membantu Anda mengenali gejala TB lebih awal secara cepat dan akurat, menggunakan metode Fuzzy
                 Tsukamoto dan metode Dempster-shafer.
             </p>
-            <a href="/diagnosis"
+            <a href="/symptomTest"
                 class="inline-block mt-6 px-8 py-3 bg-white text-green-600 font-semibold rounded-full border border-green-600 shadow hover:bg-green-100 transition">
                 Mulai Diagnosis
             </a>
@@ -130,32 +130,6 @@
 
         </section>
 
-        <!-- Statistik Penyakit TB di Kecamatan -->
-        <section class="mt-20 px-4 lg:px-24 text-center">
-            <h2 class="text-3xl font-bold text-green-800 mb-6">Statistik Penyakit TB di Kecamatan Cugenang</h2>
-            <p class="text-gray-700 max-w-4xl mx-auto mb-8">
-                Berikut adalah data statistik terkini mengenai penyakit Tuberkulosis (TB) di kecamatan Cugenang :
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div
-                    class="p-6 bg-white rounded-xl border border-green-200 shadow-[0_10px_0px_#16a34a] hover:shadow-[0_12px_0px_#15803d] transition duration-300">
-                    <h3 class="text-xl font-semibold text-green-700">Jumlah Kasus</h3>
-                    <p class="text-lg text-gray-600">350 Kasus TB terdeteksi tahun ini di kecamatan Cugenang.</p>
-                </div>
-                <div
-                    class="p-6 bg-white rounded-xl border border-green-200 shadow-[0_10px_0px_#16a34a] hover:shadow-[0_12px_0px_#15803d] transition duration-300">
-                    <h3 class="text-xl font-semibold text-green-700">Tingkat Penyebaran</h3>
-                    <p class="text-lg text-gray-600">Tingkat penyebaran TB di kecamatan Cugenang mencapai 5% per tahun.
-                    </p>
-                </div>
-                <div
-                    class="p-6 bg-white rounded-xl border border-green-200 shadow-[0_10px_0px_#16a34a] hover:shadow-[0_12px_0px_#15803d] transition duration-300">
-                    <h3 class="text-xl font-semibold text-green-600">Pasien yang Sembuh</h3>
-                    <p class="text-lg text-gray-600">80% pasien TB di kecamatan Cugenang berhasil sembuh dengan
-                        pengobatan yang tepat.</p>
-                </div>
-            </div>
-        </section>
 
 
     </div>

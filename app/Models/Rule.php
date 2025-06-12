@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rule extends Model
 {
     protected $fillable = [
-        'nama',
+        'kode_aturan',
         'fuzzy_output_id',
     ];
 

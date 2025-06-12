@@ -46,6 +46,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Jenis Kelamin</th>
                                 <th>Email</th>
                                 <th>No.HP</th>
                                 <th>Alamat</th>
@@ -57,9 +59,11 @@
                             <tr>
                                 <td>{{ $num++ }} </td>
                                 <td>{{ $user->name }}</td>
+                                <td>{{ $user->kelamin }}</td>
+                                <td>{{ $user->tgl_lahir }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->phone_number }}</td>
-                                <td>{{ $user->address }}</td>
+                                <td>{{ $user->alamat }}</td>
                                 <td class="flex space-x-2">
                                     <x-tertiary-button tag="a"
                                         class="inline-flex items-center px-3 py-1 bg-yellow-400 hover:bg-yellow-500 text-white text-sm font-medium rounded-xl shadow-sm transition transform hover:scale-105"

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FuzzyOutput extends Model
 {
     protected $fillable = [
-        'kategori',
+        'himpunan',
         'min',
         'max',
         'disease_id',
