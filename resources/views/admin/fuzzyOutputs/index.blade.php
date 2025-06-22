@@ -10,16 +10,6 @@
                 <div class="bg-white light:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-black dark:text-black">
                         <div class="flex justify-between items-center px-6 py-4">
-                            <x-primary-button tag="a" href="{{ route('fuzzy_output.create') }}"
-                                class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-700 text-white text-sm font-semibold rounded-xl shadow-md transition transform hover:scale-105"><svg
-                                    class="w-4 h-4 text-gray-100 dark:text-white" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="4" d="M5 12h14m-7 7V5" />
-                                </svg>
-                                Tambah</x-primary-button>
-
 
                             <div class="relative max-w-xs">
                                 {{-- Search --}}
@@ -77,45 +67,11 @@
                                             Edit
                                         </x-tertiary-button>
 
-                                        <x-danger-button x-data=""
-                                            class="inline-flex items-center px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm font-medium rounded-xl shadow-sm transition transform hover:scale-105"
-                                            x-on:click.prevent="$dispatch('open-modal', 'confirm-menu-deletion')"
-                                            x-on:click="$dispatch('set-action', '{{ route('fuzzy_output.destroy', $fuzzy_output->id) }}')">
-                                            <svg class="w-4 h-4 text-gray-100 dark:text-white" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
-                                            </svg>
-                                            Hapus
-                                        </x-danger-button>
-
                                     </td>
                                 </tr>
                             @endforeach
                         </x-table>
 
-                        <x-modal name="confirm-menu-deletion" focusable maxWidth="xl">
-                            <form method="post" x-bind:action="action" class="p-6">
-                                @csrf
-                                @method('delete')
-                                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                    {{ __('Apakah anda yakin akan menghapus data?') }}
-                                </h2>
-                                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                                    {{ __('Setelah proses dilaksanakan. Data akan dihilangkan secara permanen.') }}
-                                </p>
-                                <div class="mt-6 flex justify-end">
-                                    <x-secondary-button x-on:click.prevent="$dispatch('close')">
-                                        {{ __('Batal') }}
-                                    </x-secondary-button>
-                                    <x-danger-button class="ml-3">
-                                        {{ __('Hapus') }}
-                                    </x-danger-button>
-                                </div>
-                            </form>
-                        </x-modal>
                     </div>
                 </div>
             </div>

@@ -10,7 +10,7 @@ class RiskDiagnosis extends Model
 
         'symptom_id',
         'diagnosis_id',
-        'hasil',
+        
     ];
 
 }

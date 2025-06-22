@@ -29,7 +29,24 @@ class DiseaseController extends Controller
             'solusi' => 'required|max:200',
         ]);
 
-        Disease::create($validated);
+        $disease = Disease::create($validated);
+
+        $defaultFuzzyOutputs = [
+            ['himpunan' => 'Rendah', 'min' => 0, 'max' => 50, 'arah' => 'Naik'],
+            ['himpunan' => 'Sedang', 'min' => 45, 'max' => 75, 'arah' => 'Segitiga'],
+            ['himpunan' => 'Tinggi', 'min' => 70, 'max' => 100, 'arah' => 'Turun'],
+        ];
+
+        foreach ($defaultFuzzyOutputs as $output) {
+            \App\Models\FuzzyOutput::create([
+                'himpunan' => $output['himpunan'],
+                'min' => $output['min'],
+                'max' => $output['max'],
+                'arah' => $output['arah'],
+                'disease_id' => $disease->id,
+            ]);
+        }
+
 
         $notification = array(
             'message' => 'Data Penyakit berhasil ditambahkan',
@@ -55,7 +72,7 @@ class DiseaseController extends Controller
     {
 
         $validated = $request->validate([
-            'kode_penyakit' => 'required|max:10|unique:diseases,kode_penyakit',
+            'kode_penyakit' => 'required|max:10|unique:diseases,kode_penyakit,'. $id,
             'nama' => 'required|max:50',
             'deskripsi' => 'required|max:200',
             'solusi' => 'required|max:200',

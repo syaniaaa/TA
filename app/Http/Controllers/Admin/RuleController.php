@@ -71,7 +71,7 @@ class RuleController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'kode_aturan' => 'required|max:10|unique:rules,kode_aturan',
+            'kode_aturan' => 'required|max:10|unique:rules,kode_aturan,' . $id,
             'fuzzy_output_id' => 'required|exists:fuzzy_outputs,id',
             'fuzzy_input_ids' => 'required|array|min:1',
             'fuzzy_input_ids.*' => 'exists:fuzzy_inputs,id',

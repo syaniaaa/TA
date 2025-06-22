@@ -25,14 +25,38 @@ class FuzzyInputController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'himpunan' => 'required|max:50',
             'min' => 'required|numeric',
-            'max' => 'required|numeric|gte:min',
-            'unit' => 'required|max:50',
+            'max' => 'required|numeric|gt:min',
+            'unit' => 'required|in:Hari,Kg,Cm,Skala',
             'symptom_id' => 'required|exists:symptoms,id',
         ]);
 
-        FuzzyInput::create($validated);
+        $min = $validated['min'];
+        $max = $validated['max'];
+        $unit = $validated['unit'];
+        $symptom_id = $validated['symptom_id'];
+
+
+        $ringan = [
+            'himpunan' => 'Ringan',
+            'min' => $min,
+            'max' => $max,
+            'unit' => $unit,
+            'arah' => 'Turun',
+            'symptom_id' => $symptom_id,
+        ];
+
+        $berat = [
+            'himpunan' => 'Berat',
+            'min' => $min,
+            'max' => $max,
+            'unit' => $unit,
+            'arah' => 'Naik',
+            'symptom_id' => $symptom_id,
+        ];
+
+        FuzzyInput::create($ringan);
+        FuzzyInput::create($berat);
 
         $notification = array(
             'message' => 'Data Gejala berhasil ditambahkan',
@@ -48,23 +72,43 @@ class FuzzyInputController extends Controller
 
     public function edit(string $id)
     {
-        $data['fuzzy_input'] = FuzzyInput::find($id);
+        $fuzzy_input = FuzzyInput::findOrFail($id);
+
+        $data['fuzzy_inputs'] = FuzzyInput::where('symptom_id', $fuzzy_input->symptom_id)->get();
         $data['symptoms'] = Symptom::pluck('nama', 'id');
 
         return view('admin.FuzzyInputs.edit', $data);
     }
 
+
     public function update(Request $request, string $id)
     {
 
         $validated = $request->validate([
-            'himpunan' => 'required|max:50',
             'min' => 'required|numeric',
-            'max' => 'required|numeric|gte:min',
-            'unit' => 'required|max:50',
+            'max' => 'required|numeric|gt:min',
+            'unit' => 'required|in:Hari,Kg,Cm,Skala',
             'symptom_id' => 'required|exists:symptoms,id',
         ]);
-        FuzzyInput::where('id', $id)->update($validated);
+
+        $min = $validated['min'];
+        $max = $validated['max'];
+        $unit = $validated['unit'];
+        $symptom_id = $validated['symptom_id'];
+
+        FuzzyInput::where('symptom_id', $symptom_id)->where('himpunan', 'Ringan')->update([
+            'min' => $min,
+            'max' => $max,
+            'unit' => $unit,
+            'arah' => 'Turun',
+        ]);
+
+        FuzzyInput::where('symptom_id', $symptom_id)->where('himpunan', 'Berat')->update([
+            'min' => $min,
+            'max' => $max,
+            'unit' => $unit,
+            'arah' => 'Naik',
+        ]);
         $notification = array(
             'message' => 'Data Gejala berhasil diperbaharui',
             'alert-type' => 'success'

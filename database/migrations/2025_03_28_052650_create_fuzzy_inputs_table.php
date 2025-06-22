@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('fuzzy_inputs', function (Blueprint $table) {
             $table->id();
-            $table->string('himpunan', 50);
+            $table->enum('himpunan', ['Ringan', 'Berat']);
             $table->float('min');
             $table->float('max');
-            $table->string('unit',50);
+            $table->enum('unit', ['Hari', 'Kg', 'Cm', 'Skala']);
+            $table->enum('arah', ['Naik', 'Turun']);
             $table->unsignedBigInteger('symptom_id');
             $table->foreign('symptom_id')->references('id')->on('symptoms')->onDelete('cascade');
             $table->timestamps();

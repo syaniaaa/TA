@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('fuzzy_outputs', function (Blueprint $table) {
             $table->id();
-            $table->string('himpunan', 50);
+            $table->enum('himpunan', ['Rendah', 'Sedang', 'Tinggi']);
             $table->float('min');
             $table->float('max');
+            $table->enum('arah', ['Naik', 'Turun', 'Segitiga']);
             $table->unsignedBigInteger('disease_id');
             $table->foreign('disease_id')->references('id')->on('diseases')->onDelete('cascade');
             $table->timestamps();

@@ -55,7 +55,7 @@ class SymptomController extends Controller
     {
 
         $validated = $request->validate([
-            'kode_gejala' => 'required|max:10|unique:symptoms,kode_gejala',
+            'kode_gejala' => 'required|max:10|unique:symptoms,kode_gejala,' . $id,
             'nama' => 'required|max:50',
             'jenis_gejala' => ['required', 'string', 'in:Khusus,Umum', 'max:50'],
 

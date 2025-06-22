@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('risk_id');
             $table->unsignedBigInteger('diagnosis_id');
-            $table->decimal('hasil', 5, 2);
             $table->foreign('risk_id')->references('id')->on('risks')->onDelete('cascade');
             $table->foreign('diagnosis_id')->references('id')->on('diagnoses')->onDelete('cascade');
             $table->timestamps();

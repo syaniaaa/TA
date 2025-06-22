@@ -21,8 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'address',
+        'alamat',
         'phone_number',
+        'tgl_lahir',
+        'kelamin',
         'role_id',
 
     ];

@@ -10,7 +10,7 @@ class DiagnosisController extends Controller
 {
     public function index()
     {
-        $data['diagnoses'] = diagnosis::all();
+        $data['diagnoses'] = Diagnosis::all();
         return view('admin.diagnoses.index', $data);
     }
 
@@ -19,6 +19,15 @@ class DiagnosisController extends Controller
 
 
         return view('admin.orders.show', compact('order_items'));
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $diagnoses = Diagnosis::where('name', 'like', "%{$query}%")->get();
+
+        return view('admin.diagnosess.index', compact('diagnoses'));
     }
 
 }

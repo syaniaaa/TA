@@ -55,7 +55,7 @@ class RiskController extends Controller
     {
 
         $validated = $request->validate([
-            'kode_risiko' => 'required|max:10|unique:risks,kode_risiko',
+            'kode_risiko' => 'required|max:10|unique:risks,kode_risiko,'. $id,
             'nama' => 'required|max:200',
             'bobot' => 'required|numeric|min:0',
 

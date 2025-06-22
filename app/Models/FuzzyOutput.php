@@ -10,6 +10,7 @@ class FuzzyOutput extends Model
         'himpunan',
         'min',
         'max',
+        'arah',
         'disease_id',
     ];
 

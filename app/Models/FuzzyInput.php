@@ -11,6 +11,7 @@ class FuzzyInput extends Model
         'min',
         'max',
         'unit',
+        'arah',
         'symptom_id',
     ];
 

@@ -9,7 +9,9 @@ use App\Http\Controllers\Admin\FuzzyInputController;
 use App\Http\Controllers\Admin\FuzzyOutputController;
 use App\Http\Controllers\Admin\RuleController;
 use App\Http\Controllers\Admin\RiskController;
-use App\Http\Controllers\Patient\DiagnosisController;
+use App\Http\Controllers\Admin\DiagnosisController;
+use App\Http\Controllers\Patient\DiagnosisController as PatientDiagnosisController;
+use App\Http\Controllers\Admin\ReportController;
 
 Route::get('/home', function () {
     return view('home');
@@ -36,10 +38,10 @@ Route::get('/result', function () {
 })->name('diagnosis.result');
 
 
-Route::get('/symptomTest', [DiagnosisController::class, 'create'])->name('diagnosis.symptomTest');
-Route::post('/symptomTest', [DiagnosisController::class, 'store'])->name('diagnosis.symptomTest.store');
-Route::get('/riskTest', [DiagnosisController::class, 'create3'])->name('diagnosis.riskTest');
-Route::post('/riskTest', [DiagnosisController::class, 'store3'])->name('diagnosis.riskTest.store3');
+Route::get('/symptomTest', [PatientDiagnosisController::class, 'create'])->name('diagnosis.symptomTest');
+Route::post('/symptomTest', [PatientDiagnosisController::class, 'store'])->name('diagnosis.symptomTest.store');
+Route::get('/riskTest', [PatientDiagnosisController::class, 'create3'])->name('diagnosis.riskTest');
+Route::post('/riskTest', [PatientDiagnosisController::class, 'store3'])->name('diagnosis.riskTest.store3');
 
 
 
@@ -114,3 +116,8 @@ Route::get('/risk/{id}/edit', [RiskController::class, 'edit'])->name('risk.edit'
 Route::match(['put', 'patch'], '/risk/{id}', [RiskController::class, 'update'])->name('risk.update');
 Route::delete('/risk/{id}', [RiskController::class, 'destroy'])->name('risk.destroy');
 Route::get('/risk/search', [RiskController::class, 'search'])->name('risk.search');
+
+Route::get('/diagnoses', [DiagnosisController::class, 'index'])->name('diagnoses');
+Route::get('/diagnosis/search', [DiagnosisController::class, 'search'])->name('diagnosis.search');
+
+Route::get('/reports', [ReportController::class, 'index'])->name('report');
