@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\RiskController;
 use App\Http\Controllers\Admin\DiagnosisController;
 use App\Http\Controllers\Patient\DiagnosisController as PatientDiagnosisController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/home', function () {
     return view('home');
@@ -42,6 +43,11 @@ Route::get('/symptomTest', [PatientDiagnosisController::class, 'create'])->name(
 Route::post('/symptomTest', [PatientDiagnosisController::class, 'store'])->name('diagnosis.symptomTest.store');
 Route::get('/riskTest', [PatientDiagnosisController::class, 'create3'])->name('diagnosis.riskTest');
 Route::post('/riskTest', [PatientDiagnosisController::class, 'store3'])->name('diagnosis.riskTest.store3');
+Route::get('/result', [PatientDiagnosisController::class, 'showResult'])->name('diagnosis.result');
+Route::get('/diagnosisHistory/history', [PatientDiagnosisController::class, 'history'])->name('diagnosis.history');
+Route::get('/patient/diagnosis-history/{id}', [DiagnosisHistoryController::class, 'show'])
+    ->name('patient.diagnosisHistory.show');
+
 
 
 
@@ -58,6 +64,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/users', [UserController::class, 'index'])->name('user');
 Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
@@ -119,5 +126,8 @@ Route::get('/risk/search', [RiskController::class, 'search'])->name('risk.search
 
 Route::get('/diagnoses', [DiagnosisController::class, 'index'])->name('diagnoses');
 Route::get('/diagnosis/search', [DiagnosisController::class, 'search'])->name('diagnosis.search');
+Route::get('/diagnosis/{id}', [DiagnosisController::class, 'show'])->name('diagnosis.show');
+
 
 Route::get('/reports', [ReportController::class, 'index'])->name('report');
+Route::get('/reports/print', [ReportController::class, 'print'])->name('reports.print');

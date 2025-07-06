@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Halaman Riwayat Diagnosis</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -13,25 +12,31 @@
     <x-navbar></x-navbar>
 
     <div class="mt-24">
-
         <section class="p-10 text-center shadow-md rounded-xl mx-4 lg:mx-24 bg-no-repeat bg-cover bg-center"
             style="background-image: linear-gradient(to right, rgba(20, 139, 64, 0.9), rgba(78, 228, 40, 0.9))">
             <h1 class="text-2xl lg:text-4xl font-extrabold text-gray-100">
                 Riwayat Diagnosis
             </h1>
         </section>
+
+        <!-- Statistik Diagnosis -->
         <div class="grid grid-cols-1 gap-4 px-4 mt-10 text-center sm:grid-cols-3 lg:mx-24">
             <div class="p-6 bg-white border rounded shadow">
                 <p class="text-lg font-semibold text-gray-700">Total Diagnosis</p>
-                <p class="mt-2 text-2xl font-bold text-green-700">5 Kali</p>
+                <p class="mt-2 text-2xl font-bold text-green-700">{{ $diagnosis->count() }} Kali</p>
             </div>
             <div class="p-6 bg-white border rounded shadow">
                 <p class="text-lg font-semibold text-gray-700">Diagnosis Terakhir</p>
-                <p class="mt-2 text-2xl font-bold text-green-700">06-05-2025</p>
+                <p class="mt-2 text-2xl font-bold text-green-700">
+                    {{ $diagnosis->first()?->tanggal->format('d-m-Y') }}
+                </p>
             </div>
             <div class="p-6 bg-white border rounded shadow">
                 <p class="text-lg font-semibold text-gray-700">Status Diagnosis Terakhir</p>
-                <p class="mt-2 text-2xl font-bold text-green-700">40% (TB Paru)</p>
+                <p class="mt-2 text-2xl font-bold text-green-700">
+                    {{ $diagnosis->first()?->hasil ?? '-' }}%
+                    ({{ $diagnosis->first()?->fuzzyOutput->disease->nama ?? '-' }})
+                </p>
             </div>
         </div>
 
@@ -47,14 +52,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-white">
-                        <td class="border p-2">06-05-2025</td>
-                        <td class="border p-2">TB Paru</td>
-                        <td class="border p-2">40%</td>
-                        <td class="border p-2">
-                            <button class="px-3 py-1 text-sm text-white bg-blue-600 rounded">Lihat Detail</button>
-                        </td>
-                    </tr>
+                    @forelse ($diagnosis as $item)
+                        <tr class="bg-white">
+                            <td class="border p-2">{{ $item->tanggal->format('d-m-Y') }}</td>
+                            <td class="border p-2">{{ $item->fuzzyOutput->disease->nama }}</td>
+                            <td class="border p-2">{{ $item->hasil }}%</td>
+                            <td class="border p-2">
+                                <a href="{{ route('patient.diagnosisHistory.show', $item->id) }}"
+                                    class="px-3 py-1 text-sm text-white bg-blue-600 rounded hover:bg-blue-700">
+                                    Lihat Detail
+                                </a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="p-4 text-gray-500">Belum ada data diagnosis</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -66,13 +80,11 @@
                 Mulai Diagnosis Baru
             </a>
         </div>
-
     </div>
 
     <div class="mt-16">
         <x-footer></x-footer>
     </div>
-
 </body>
 
 </html>

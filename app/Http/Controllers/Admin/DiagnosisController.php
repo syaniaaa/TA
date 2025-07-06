@@ -14,12 +14,15 @@ class DiagnosisController extends Controller
         return view('admin.diagnoses.index', $data);
     }
 
+    // DiagnosisController.php
+
     public function show($id)
     {
-
-
-        return view('admin.orders.show', compact('order_items'));
+        $diagnosis = Diagnosis::with(['user', 'fuzzyOutput', 'symptoms', 'risks'])->findOrFail($id);
+        return view('admin.diagnoses.show', compact('diagnosis'));
     }
+
+
 
     public function search(Request $request)
     {

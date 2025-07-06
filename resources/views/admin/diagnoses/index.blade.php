@@ -36,6 +36,7 @@
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>Hasil</th>
+                                    <th>Penyakit</th>
                                     <th>Tanggal Tes</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -48,6 +49,7 @@
                                     <td>{{ $num++ }}</td>
                                     <td>{{ $diagnosis->user->name ?? '-' }}</td>
                                     <td>{{ $diagnosis->hasil }}</td>
+                                    <td>{{ $diagnosis->fuzzyOutput->disease->nama }} {{ $diagnosis->fuzzyOutput->himpunan }}</td>
                                     <td>{{ $diagnosis->tanggal }}</td>
                                     <td class="flex space-x-2">
                                         <x-tertiary-button tag="a"

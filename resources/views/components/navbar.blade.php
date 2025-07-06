@@ -10,18 +10,30 @@
         <!-- Menu Desktop -->
         <div class="font-poppins hidden md:flex space-x-8 items-center">
             <a href="/home"
-                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Beranda</a>
+                class="text-base font-medium transition-all duration-200
+            {{ request()->is('home') ? 'text-green-500 font-bold border-b-2 border-green-500' : 'text-green-700 hover:text-green-300' }}">
+                Beranda
+            </a>
             <a href="/symptomTest"
-                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">
-                Diagnosis </a>
-            <a href="/history"
-                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Riwayat
-                Diagnosis</a>
+                class="text-base font-medium transition-all duration-200
+            {{ request()->is('symptomTest') ? 'text-green-500 font-bold border-b-2 border-green-500' : 'text-green-700 hover:text-green-300' }}">
+                Diagnosis
+            </a>
+            <a href="/diagnosisHistory/history"
+                class="text-base font-medium transition-all duration-200
+            {{ request()->is('diagnosisHistory/history') ? 'text-green-500 font-bold border-b-2 border-green-500' : 'text-green-700 hover:text-green-300' }}">
+                Riwayat Diagnosis
+            </a>
             <a href="/question"
-                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Tanya
-                Jawab Seputar TB</a>
+                class="text-base font-medium transition-all duration-200
+            {{ request()->is('question') ? 'text-green-500 font-bold border-b-2 border-green-500' : 'text-green-700 hover:text-green-300' }}">
+                Tanya Jawab Seputar TB
+            </a>
             <a href="/aboutUs"
-                class="font-poppins text-green-700 text-base font-medium hover:text-yellow-100 transition-all duration-200">Tentang</a>
+                class="text-base font-medium transition-all duration-200
+            {{ request()->is('aboutUs') ? 'text-green-500 font-bold border-b-2 border-green-500' : 'text-green-700 hover:text-green-300' }}">
+                Tentang
+            </a>
         </div>
 
         <!-- Login / Logout -->
@@ -30,7 +42,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="bg-white text-green-700 font-semibold px-4 py-2 rounded-full shadow hover:bg-green-100 transition">
+                        class="bg-white text-green-700 font-semibold px-4 py-2 rounded-full shadow hover:bg-green-300 transition">
                         Keluar
                     </button>
                 </form>

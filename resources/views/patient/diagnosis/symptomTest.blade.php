@@ -33,6 +33,19 @@
             <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md">
                 <h2 class="text-xl font-semibold mb-4 text-gray-700">Pilih Gejala yang Dirasakan</h2>
 
+                @if (session('error'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                @if (session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+
                 <form method="POST" action="{{ route('diagnosis.symptomTest.store') }}">
                     @csrf
                     <div class="space-y-4 text-gray-800">
@@ -60,15 +73,15 @@
                     </div>
 
                     <div class="pt-4 flex flex-col sm:flex-row sm:justify-end gap-4">
-                        <a href="{{ route('diagnosis.riskTest') }}"
+                        <button type="submit"
                             class="w-full sm:w-auto text-center bg-white hover:bg-green-300 text-green-600 font-semibold py-2 px-6 rounded-xl transition duration-200
-                        shadow-lg hover:shadow-2xl outline-none hover:outline-2 hover:outline-green-600">
+                            shadow-lg hover:shadow-2xl outline-none hover:outline-2 hover:outline-green-600">
                             Lanjutkan
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block text-green-600 ml-2"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"></path>
                             </svg>
-                        </a>
+                        </button>
                     </div>
                 </form>
             </div>

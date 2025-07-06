@@ -29,9 +29,9 @@
 
                         <div class="mt-6 flex justify-center space-x-4">
                             <x-primary-button class="px-6 py-2" type="submit">Cari</x-primary-button>
-                            {{-- <x-primary-button class="px-6 py-2">
+                            <x-primary-button class="px-6 py-2">
                                 <a href="{{ route('reports.print') }}" target="_blank">Cetak PDF</a>
-                            </x-primary-button> --}}
+                            </x-primary-button>
                         </div>
                     </form>
 
