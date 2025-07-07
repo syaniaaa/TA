@@ -13,10 +13,11 @@ return new class extends Migration {
         Schema::create('diagnoses', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->decimal('hasil', 5, 2);
+            $table->decimal('hasil', 5, 2)->nullable();
             $table->decimal('hasil_fuzzy', 5, 2);
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('fuzzy_output_id');
+            $table->unsignedBigInteger('fuzzy_output_id')->nullable();
+            $table->string('tingkat_kemungkinan', 20)->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('fuzzy_output_id')->references('id')->on('fuzzy_outputs')->onDelete('cascade');
             $table->timestamps();

@@ -41,11 +41,11 @@ Route::get('/result', function () {
 
 Route::get('/symptomTest', [PatientDiagnosisController::class, 'create'])->name('diagnosis.symptomTest');
 Route::post('/symptomTest', [PatientDiagnosisController::class, 'store'])->name('diagnosis.symptomTest.store');
-Route::get('/riskTest', [PatientDiagnosisController::class, 'create3'])->name('diagnosis.riskTest');
-Route::post('/riskTest', [PatientDiagnosisController::class, 'store3'])->name('diagnosis.riskTest.store3');
+Route::get('/riskTest', [PatientDiagnosisController::class, 'create2'])->name('diagnosis.riskTest');
+Route::post('/riskTest', [PatientDiagnosisController::class, 'store2'])->name('diagnosis.riskTest.store2');
 Route::get('/result', [PatientDiagnosisController::class, 'showResult'])->name('diagnosis.result');
 Route::get('/diagnosisHistory/history', [PatientDiagnosisController::class, 'history'])->name('diagnosis.history');
-Route::get('/patient/diagnosis-history/{id}', [DiagnosisHistoryController::class, 'show'])
+Route::get('/patient/diagnosis-history/{id}', [PatientDiagnosisController::class, 'show'])
     ->name('patient.diagnosisHistory.show');
 
 

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Symptom;
 use App\Models\Risk;
 use App\Models\FuzzyInput;
+use App\Models\FuzzyOutput;
+use App\Models\Rule;
 use App\Models\Diagnosis;
 
 
@@ -20,30 +22,28 @@ class DiagnosisController extends Controller
     }
 
 
-
     public function store(Request $request)
     {
-        $jawaban = $request->input('jawaban');
+        $jawaban = $request->input('gejala');
 
         // 1. Validasi jumlah gejala dan gejala khusus
         if (count($jawaban) < 3 || count($jawaban) > 8) {
             return back()->with('error', 'Pilih minimal 3 dan maksimal 8 gejala.');
         }
 
-        $gejalaKhususTerpilih = Symptom::whereIn('id', array_keys($jawaban))
+        $gejalaKhusus = Symptom::whereIn('id', array_keys($jawaban))
             ->where('jenis_gejala', 'Khusus')
             ->exists();
 
-        if (!$gejalaKhususTerpilih) {
+        if (!$gejalaKhusus) {
             return back()->with('error', 'Minimal satu gejala khusus harus dipilih.');
         }
 
-        // 2. Fuzzifikasi input gejala
+        // 2. Fuzzifikasi
         $fuzzifikasi = [];
         foreach ($jawaban as $symptomId => $nilaiInput) {
             $nilai = floatval($nilaiInput);
 
-            // Ambil semua fungsi keanggotaan untuk gejala ini
             $fuzzyInputs = FuzzyInput::where('symptom_id', $symptomId)->get();
 
             foreach ($fuzzyInputs as $fi) {
@@ -54,14 +54,14 @@ class DiagnosisController extends Controller
                 if ($fi->himpunan == 'Ringan') {
                     if ($nilai <= $min)
                         $mu = 1;
-                    elseif ($nilai > $min && $nilai <= $max)
+                    elseif ($nilai <= $max)
                         $mu = ($max - $nilai) / ($max - $min);
                     else
                         $mu = 0;
                 } else { // Berat
                     if ($nilai <= $min)
                         $mu = 0;
-                    elseif ($nilai > $min && $nilai <= $max)
+                    elseif ($nilai <= $max)
                         $mu = ($nilai - $min) / ($max - $min);
                     else
                         $mu = 1;
@@ -75,157 +75,190 @@ class DiagnosisController extends Controller
             }
         }
 
-        // 3. Ambil semua rule yang relevan
+        // 3. Inferensi: Cek rule yang aktif
         $activeRules = [];
-        foreach (\App\Models\Rule::with('fuzzyInputs')->get() as $rule) {
-            $ruleInputs = $rule->fuzzyInputs->pluck('id')->toArray();
+        foreach (Rule::with(['fuzzyInputs', 'fuzzyOutput'])->get() as $rule) {
+            $inputIds = $rule->fuzzyInputs->pluck('id')->toArray();
+            $muList = [];
 
-            // cek apakah semua input rule tersedia di hasil fuzzifikasi
-            $matchingMus = [];
-            foreach ($ruleInputs as $fuzzyInputId) {
-                $match = collect($fuzzifikasi)->firstWhere('fuzzy_input_id', $fuzzyInputId);
+            foreach ($inputIds as $fid) {
+                $match = collect($fuzzifikasi)->firstWhere('fuzzy_input_id', $fid);
                 if ($match) {
-                    $matchingMus[] = $match['mu'];
+                    $muList[] = $match['mu'];
                 }
             }
 
-            // hanya jika semua input dalam rule ada
-            if (count($matchingMus) == count($ruleInputs)) {
-                $alpha = min($matchingMus);
-
-                // 4. Hitung Z dari output rule
+            if (count($muList) == count($inputIds)) {
+                $alpha = min($muList);
                 $output = $rule->fuzzyOutput;
-                if ($output->arah == 'Turun') {
-                    // contoh: (max - z)/(max - min) = α → z = max - α*(max - min)
-                    $z = $output->max - $alpha * ($output->max - $output->min);
-                } elseif ($output->arah == 'Naik') {
-                    $z = $output->min + $alpha * ($output->max - $output->min);
-                } else { // Segitiga → ambil puncaknya = (min+max)/2, rumus sesuai α
-                    $tengah = ($output->min + $output->max) / 2;
-                    if ($alpha <= 0.5) {
-                        $z = $output->min + 2 * $alpha * ($tengah - $output->min);
-                    } else {
-                        $z = $output->max - 2 * (1 - $alpha) * ($output->max - $tengah);
-                    }
-                }
 
-                $activeRules[] = [
-                    'alpha' => $alpha,
-                    'z' => $z,
-                    'fuzzy_output_id' => $output->id,
-                ];
+                // DEBUG: tampilkan alpha dan output
+                dump("Rule ID: {$rule->id}");
+                dump("Alpha: {$alpha}");
+                dump("Output: {$output->label} ({$output->min} - {$output->max}, arah: {$output->arah})");
+
+                if ($alpha > 0) {
+                    if ($output->arah == 'Turun') {
+                        $z = $output->max - $alpha * ($output->max - $output->min);
+                    } elseif ($output->arah == 'Naik') {
+                        $z = $output->min + $alpha * ($output->max - $output->min);
+                    } elseif ($output->arah == 'Segitiga') {
+                        $mid = $output->mid;
+                        if ($alpha <= 0.5) {
+                            $z = $output->min + 2 * $alpha * ($mid - $output->min);
+                        } else {
+                            $z = $output->max - 2 * (1 - $alpha) * ($output->max - $mid);
+                        }
+                    }
+
+
+                    dump("Z (output nilai): {$z}");
+                    $activeRules[] = [
+                        'alpha' => $alpha,
+                        'z' => $z,
+                        'fuzzy_output_id' => $output->id,
+                    ];
+                } else {
+                    dump("⛔ Rule ID {$rule->id} dilewati karena alpha = 0");
+                }
             }
+
+
         }
 
         if (empty($activeRules)) {
-            return back()->with('error', 'Tidak ada rule yang dapat dieksekusi.');
+            return back()->with('error', 'Tidak ada rule yang cocok. Coba pilih gejala lain.');
         }
 
-        // 5. Defuzzifikasi (z = Σαz / Σα)
+        // 4. Defuzzifikasi
         $numerator = collect($activeRules)->sum(fn($r) => $r['alpha'] * $r['z']);
         $denominator = collect($activeRules)->sum('alpha');
-        $zFinal = $numerator / $denominator;
+        $zFinal = $denominator > 0 ? $numerator / $denominator : 0;
 
-        // Ambil output dengan nilai alpha terbesar (atau bisa juga pakai z terbesar)
         $terkuat = collect($activeRules)->sortByDesc('alpha')->first();
 
-        // 6. Simpan ke diagnoses
-        $diagnosis = \App\Models\Diagnosis::create([
+        // 5. Simpan hasil diagnosis
+        $diagnosis = Diagnosis::create([
             'tanggal' => now(),
-            'hasil' => $zFinal,
-            'hasil_fuzzy' => $terkuat['alpha'],
+            'hasil_fuzzy' => round($zFinal, 2),
             'user_id' => auth()->id(),
             'fuzzy_output_id' => $terkuat['fuzzy_output_id'],
         ]);
 
-        // Simpan gejala yang dipilih ke tabel pivot symptom_diagnosis
-        $diagnosis = \App\Models\Diagnosis::create([
-            'tanggal' => now(),
-            'hasil' => $zFinal,
-            'hasil_fuzzy' => $terkuat['alpha'],
-            'user_id' => auth()->id(),
+        // 6. Simpan ke tabel pivot symptom_diagnosis
+        foreach ($jawaban as $symptomId => $value) {
+            $diagnosis->symptoms()->attach($symptomId, ['nilai' => $value]);
+        }
+
+        session([
+            'diagnosis_id' => $diagnosis->id,
+            'hasil_fuzzy' => $zFinal,
             'fuzzy_output_id' => $terkuat['fuzzy_output_id'],
         ]);
 
-        // Simpan ke tabel pivot
-        $diagnosis->symptoms()->attach(array_keys($jawaban));
+        return redirect()->route('patient.diagnosis.riskTest')->with('success', 'Fuzzifikasi berhasil, lanjut ke risiko.');
 
-
-
-        return redirect()->route('dashboard')->with('success', 'Diagnosis berhasil dihitung.');
+        // dd('Diagnosis berhasil disimpan.');
     }
 
 
-    public function create3()
+
+    public function create2()
     {
         $risks = Risk::all();
         return view('patient.diagnosis.riskTest', compact('risks'));
     }
 
-    public function store3(Request $request)
+    public function store2(Request $request)
     {
         $user = auth()->user();
-        $risikoDipilih = $request->input('jawaban.risiko'); // inputan user
+        $risikoDipilih = $request->input('jawaban.risiko');
 
-        // Ambil hasil fuzzy dan output ID dari session (harus sudah dihitung sebelumnya)
-        $hasilFuzzy = session('hasil_fuzzy'); // contoh: 47
-        $fuzzyOutputId = session('fuzzy_output_id'); // ID fuzzy_output hasil rule
+        // Ambil hasil fuzzy dari session
+        $hasilFuzzy = session('hasil_fuzzy');
+        $fuzzyOutputId = session('fuzzy_output_id');
+        $diagnosisId = session('diagnosis_id'); // Ambil diagnosis ID dari store() sebelumnya
 
-        if (!$hasilFuzzy || !$fuzzyOutputId) {
-            return back()->with('error', 'Hasil fuzzy belum tersedia.');
+        // Validasi
+        if (!$hasilFuzzy || !$fuzzyOutputId || !$diagnosisId) {
+            return back()->with('error', 'Hasil diagnosis gejala belum tersedia.');
         }
 
-        // Inisialisasi M1 (hasil fuzzy)
-        $M_TB = $hasilFuzzy / 100; // normalisasi ke 0-1
-        $M_Theta = 1 - $M_TB;
+        // Tanpa risiko: hasil dari fuzzy langsung dijadikan DST
+        if (!$risikoDipilih || count($risikoDipilih) === 0) {
+            $belief = $hasilFuzzy / 100;
+            $plausibility = 1;
+            $hasilDST = round($belief * 100, 2);
+        } else {
+            if (count($risikoDipilih) > 4) {
+                return back()->with('error', 'Pilih maksimal 4 faktor risiko.');
+            }
 
-        // Proses risiko yang dipilih
-        if ($risikoDipilih && count($risikoDipilih) > 0) {
-            foreach ($risikoDipilih as $id_risiko) {
-                $risk = Risk::find($id_risiko);
+            $M_TB = $hasilFuzzy / 100;
+            $M_Theta = 1 - $M_TB;
+            $alpha = 0.1;
+
+            foreach ($risikoDipilih as $riskId) {
+                $risk = Risk::find($riskId);
                 if (!$risk)
                     continue;
 
-                $alpha = 0.1; // kepercayaan 10%
-                $M2_TB = $alpha * $risk->bobot;
-                $M2_Theta = (1 - $alpha) + ($alpha * (1 - $risk->bobot));
+                $m2_TB = $alpha * $risk->bobot;
+                $m2_Theta = (1 - $alpha) + ($alpha * (1 - $risk->bobot));
 
-                // Kombinasi Dempster
-                $M_TB_new = ($M_TB * $M2_TB) + ($M_TB * $M2_Theta) + ($M_Theta * $M2_TB);
-                $M_Theta_new = $M_Theta * $M2_Theta;
+                $m_tb_tb = $M_TB * $m2_TB;
+                $m_tb_theta = $M_TB * $m2_Theta;
+                $m_theta_tb = $M_Theta * $m2_TB;
+                $m_theta_theta = $M_Theta * $m2_Theta;
 
-                $M_TB = $M_TB_new;
-                $M_Theta = $M_Theta_new;
+                $denominator = 1;
+
+                $M_TB = ($m_tb_tb + $m_tb_theta + $m_theta_tb) / $denominator;
+                $M_Theta = $m_theta_theta / $denominator;
             }
+
+            $belief = $M_TB;
+            $plausibility = 1 - $M_Theta;
+            $hasilDST = round($belief * 100, 2);
         }
 
-        // Simpan diagnosis akhir
-        $diagnosis = Diagnosis::create([
-            'tanggal' => now(),
-            'hasil' => round($M_TB * 100, 2),
-            'hasil_fuzzy' => round($hasilFuzzy, 2),
-            'user_id' => $user->id,
-            'fuzzy_output_id' => $fuzzyOutputId,
+        // Klasifikasi tingkat kemungkinan
+        if ($hasilDST <= 50) {
+            $tingkatKemungkinan = 'Kemungkinan Rendah';
+        } elseif ($hasilDST <= 79) {
+            $tingkatKemungkinan = 'Kemungkinan Sedang';
+        } elseif ($hasilDST <= 99) {
+            $tingkatKemungkinan = 'Besar Kemungkinan';
+        } else {
+            $tingkatKemungkinan = 'Sangat Yakin';
+        }
+
+        // 🔄 UPDATE diagnosis yang sudah ada
+        $diagnosis = Diagnosis::findOrFail($diagnosisId);
+        $diagnosis->update([
+            'hasil' => $hasilDST,
+            'tingkat_kemungkinan' => $tingkatKemungkinan
         ]);
 
-        foreach ($risikoDipilih as $riskId) {
-            DB::table('risk_diagnosis')->insert([
-                'risk_id' => $riskId,
-                'diagnosis_id' => $diagnosis->id,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-        }
-
-        // Simpan hubungan diagnosis <-> risiko
-        if ($risikoDipilih) {
-            foreach ($risikoDipilih as $id_risiko) {
-                $diagnosis->risks()->attach($id_risiko);
+        // Simpan ke pivot table risk_diagnosis
+        if ($risikoDipilih && count($risikoDipilih) > 0) {
+            foreach ($risikoDipilih as $riskId) {
+                DB::table('risk_diagnosis')->insert([
+                    'risk_id' => $riskId,
+                    'diagnosis_id' => $diagnosisId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
             }
         }
 
-        return redirect()->route('diagnosis.riskTest')->with('success', 'Diagnosis berhasil disimpan.');
+        return redirect()->route('diagnosis.riskTest')->with([
+            'success' => 'Diagnosis berhasil disimpan.',
+            'hasilDST' => $hasilDST,
+            'tingkatKemungkinan' => $tingkatKemungkinan,
+        ]);
     }
+
 
     public function showResult()
     {
@@ -236,6 +269,7 @@ class DiagnosisController extends Controller
 
         return view('patient.diagnosis.result', compact('diagnosis'));
     }
+
 
     public function history()
     {

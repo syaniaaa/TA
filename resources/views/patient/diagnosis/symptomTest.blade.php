@@ -52,21 +52,17 @@
                         @foreach ($symptoms as $symptom)
                             <div x-data="{ checked: false }" class="mb-4">
                                 <label class="flex items-center space-x-3">
-                                    <input type="checkbox" name="jawaban[{{ $symptom->id }}][checked]" value="1"
-                                        x-model="checked"
+                                    <input type="checkbox" x-model="checked"
                                         class="form-checkbox h-5 w-5 text-green-600 transition duration-150 ease-in-out">
                                     <span class="text-sm">{{ $symptom->nama }}</span>
                                 </label>
 
-                                <div x-show="checked" class="ml-8 mt-2">
+                                <div x-show="checked" x-transition class="ml-8 mt-2">
                                     <label class="block text-sm font-medium text-gray-600 mb-1">
-                                        Berapa {{ $symptom->FuzzyInputs->first()->unit ?? '...' }} ?
+                                        Berapa ({{ $symptom->FuzzyInputs->first()->unit ?? 'Hari' }}) yang Anda rasakan?
                                     </label>
-                                    <div class="flex items-center gap-2">
-                                        <input type="number" name="jawaban[{{ $symptom->id }}][nilai]" min="0"
-                                            placeholder="Masukkan nilai"
-                                            class="w-full p-2 border border-gray-300 rounded">
-                                    </div>
+                                    <input type="number" name="gejala[{{ $symptom->id }}]" min="0"
+                                        placeholder="Masukkan Jumlah" class="w-full p-2 border border-gray-300 rounded">
                                 </div>
                             </div>
                         @endforeach
@@ -74,10 +70,9 @@
 
                     <div class="pt-4 flex flex-col sm:flex-row sm:justify-end gap-4">
                         <button type="submit"
-                            class="w-full sm:w-auto text-center bg-white hover:bg-green-300 text-green-600 font-semibold py-2 px-6 rounded-xl transition duration-200
-                            shadow-lg hover:shadow-2xl outline-none hover:outline-2 hover:outline-green-600">
+                            class="w-full sm:w-auto text-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-xl transition duration-200 shadow-lg hover:shadow-2xl">
                             Lanjutkan
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block text-green-600 ml-2"
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block text-white ml-2"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"></path>
                             </svg>

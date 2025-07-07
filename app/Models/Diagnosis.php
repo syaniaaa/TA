@@ -10,6 +10,7 @@ class Diagnosis extends Model
         'tanggal',
         'hasil',
         'hasil_fuzzy',
+        'tingkat_kemungkinan',
         'user_id',
         'fuzzy_output_id',
     ];

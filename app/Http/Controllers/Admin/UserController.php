@@ -30,6 +30,7 @@ class UserController extends Controller
             'phone_number' => 'required|numeric|digits_between:10,13',
             'password' => 'required|string|min:8',
             'address' => 'required|max:255',
+            'kelamin' => 'reqired|in:Laki-laki,Perempuan',
             'role_id' => 'required|exists:roles,id',
         ]);
 

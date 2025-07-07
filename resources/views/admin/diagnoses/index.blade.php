@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-poppins font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Kelola Risiko') }}
+            {{ __('Kelola Diagnosis') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -49,7 +49,7 @@
                                     <td>{{ $num++ }}</td>
                                     <td>{{ $diagnosis->user->name ?? '-' }}</td>
                                     <td>{{ $diagnosis->hasil }}</td>
-                                    <td>{{ $diagnosis->fuzzyOutput->disease->nama }} {{ $diagnosis->fuzzyOutput->himpunan }}</td>
+                                    <td>{{ $diagnosis->tingkat_kemungkinan }} {{ $diagnosis->fuzzyOutput->disease->nama }} </td>
                                     <td>{{ $diagnosis->tanggal }}</td>
                                     <td class="flex space-x-2">
                                         <x-tertiary-button tag="a"

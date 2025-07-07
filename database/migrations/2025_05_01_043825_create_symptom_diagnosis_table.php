@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('diagnosis_id');
             $table->foreign('diagnosis_id')->references('id')->on('diagnoses')->onDelete('cascade');
             $table->foreign('symptom_id')->references('id')->on('symptoms')->onDelete('cascade');
+            $table->integer('nilai');
             $table->timestamps();
         });
     }

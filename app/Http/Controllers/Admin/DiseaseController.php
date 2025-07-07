@@ -32,9 +32,9 @@ class DiseaseController extends Controller
         $disease = Disease::create($validated);
 
         $defaultFuzzyOutputs = [
-            ['himpunan' => 'Rendah', 'min' => 0, 'max' => 50, 'arah' => 'Naik'],
-            ['himpunan' => 'Sedang', 'min' => 45, 'max' => 75, 'arah' => 'Segitiga'],
-            ['himpunan' => 'Tinggi', 'min' => 70, 'max' => 100, 'arah' => 'Turun'],
+            ['himpunan' => 'Rendah', 'min' => 45, 'max' => 50, 'arah' => 'Turun', 'mid' => null],
+            ['himpunan' => 'Sedang', 'min' => 45, 'mid' => 60, 'max' => 75, 'arah' => 'Segitiga'],
+            ['himpunan' => 'Tinggi', 'min' => 70, 'max' => 75, 'arah' => 'Naik', 'mid' => null],
         ];
 
         foreach ($defaultFuzzyOutputs as $output) {
@@ -42,6 +42,7 @@ class DiseaseController extends Controller
                 'himpunan' => $output['himpunan'],
                 'min' => $output['min'],
                 'max' => $output['max'],
+                'mid' => $output['mid'],
                 'arah' => $output['arah'],
                 'disease_id' => $disease->id,
             ]);
@@ -72,7 +73,7 @@ class DiseaseController extends Controller
     {
 
         $validated = $request->validate([
-            'kode_penyakit' => 'required|max:10|unique:diseases,kode_penyakit,'. $id,
+            'kode_penyakit' => 'required|max:10|unique:diseases,kode_penyakit,' . $id,
             'nama' => 'required|max:50',
             'deskripsi' => 'required|max:200',
             'solusi' => 'required|max:200',

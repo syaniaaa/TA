@@ -30,6 +30,7 @@ class FuzzyOutputController extends Controller
             'himpunan' => 'required|in:Rendah,Sedang,Tinggi',
             'min' => 'required|numeric',
             'max' => 'required|numeric|gte:min',
+            'mid' => 'nullable|numeric|gte:min|lte:max',
             'arah' => 'required|in:Naik,Turun,Segitiga',
             'disease_id' => 'required|exists:diseases,id',
         ]);

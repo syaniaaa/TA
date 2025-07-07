@@ -10,6 +10,7 @@ class SymptomDiagnosis extends Model
 
         'symptom_id',
         'diagnosis_id',
-        
+        'nilai'
+
     ];
 }

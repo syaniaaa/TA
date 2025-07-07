@@ -12,7 +12,6 @@
             <p><strong>Nama User:</strong> {{ $diagnosis->user->name ?? '-' }}</p>
             <p><strong>Hasil:</strong> {{ $diagnosis->hasil }}</p>
             <p><strong>Hasil Fuzzy:</strong> {{ $diagnosis->hasil_fuzzy }}</p>
-            <p><strong>Output Fuzzy:</strong> {{ $diagnosis->fuzzyOutput->nama_output ?? '-' }}</p>
 
             <h3 class="text-lg font-bold mt-6 mb-2">Gejala yang Dipilih:</h3>
             <ul class="list-disc list-inside">
@@ -31,12 +30,9 @@
                     <li>Tidak ada risiko</li>
                 @endforelse
             </ul>
-            <p><strong>Hasil Diagnosis (Penyakit):</strong> {{ $diagnosis->fuzzyOutput->nama_output ?? '-' }}</p>
+            <p><strong>Hasil Diagnosis (Penyakit):</strong> {{ $diagnosis->tingkat_kemungkinan }} {{ $diagnosis->fuzzyOutput->disease->nama }}</p>
 
         </div>
     </div>
-    <h4>DEBUG:</h4>
-    <p>Jumlah Gejala: {{ $diagnosis->symptoms->count() }}</p>
-    <p>Jumlah Risiko: {{ $diagnosis->risks->count() }}</p>
 
 </x-app-layout>
