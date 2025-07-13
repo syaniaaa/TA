@@ -47,6 +47,7 @@ Route::get('/result', [PatientDiagnosisController::class, 'showResult'])->name('
 Route::get('/diagnosisHistory/history', [PatientDiagnosisController::class, 'history'])->name('diagnosis.history');
 Route::get('/patient/diagnosis-history/{id}', [PatientDiagnosisController::class, 'show'])
     ->name('patient.diagnosisHistory.show');
+Route::get('/diagnosis-history/{id}/print', [PatientDiagnosisController::class, 'print'])->name('patient.diagnosisHistory.print');
 
 
 

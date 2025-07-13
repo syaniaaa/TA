@@ -61,21 +61,34 @@
                         <td class="p-3">{{ \Carbon\Carbon::parse($item->tanggal)->format('d-m-Y') }}</td>
                         <td class="p-3">{{ $item->fuzzyOutput->disease->nama ?? '-' }}</td>
                         <td class="p-3">{{ $item->hasil ?? '-' }}%</td>
-                        <td class="p-3">
+                        <td class="p-3 space-x-2">
+                            {{-- Tombol Lihat Detail --}}
                             <x-primary-button tag="a"
                                 class="inline-flex items-center px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl shadow-sm transition transform hover:scale-105"
                                 href="{{ route('patient.diagnosisHistory.show', $item->id) }}">
-                                <svg class="w-4 h-4 text-gray-100 dark:text-white" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-width="2"
-                                        d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
-                                    <path stroke="currentColor" stroke-width="2"
-                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                <svg class="w-4 h-4 text-gray-100 dark:text-white mr-1"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
+                                    <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                 </svg>
-                                    Lihat Detail
+                                Lihat Detail
                             </x-primary-button>
+
+                            {{-- Tombol Print --}}
+                            <x-secondary-button tag="a"
+                                class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-xl shadow-sm transition transform hover:scale-105"
+                                href="{{ route('patient.diagnosisHistory.print', $item->id) }}" target="_blank">
+                                <svg class="w-4 h-4 mr-1 text-gray-700 dark:text-white"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M6 9V4h12v5M6 18h12v2H6v-2Zm13-6a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM6 13h12v5H6v-5Z" />
+                                </svg>
+                                Print
+                            </x-secondary-button>
                         </td>
+
                     </tr>
                 @empty
                     <tr>

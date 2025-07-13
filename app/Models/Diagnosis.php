@@ -18,7 +18,9 @@ class Diagnosis extends Model
     // Diagnosis.php
     public function symptoms()
     {
-        return $this->belongsToMany(Symptom::class, 'symptom_diagnosis')->withTimestamps();
+        return $this->belongsToMany(Symptom::class, 'symptom_diagnosis')
+            ->withPivot('nilai')
+            ->withTimestamps();
     }
     public function user()
     {
@@ -36,5 +38,5 @@ class Diagnosis extends Model
         return $this->belongsToMany(Risk::class, 'risk_diagnosis');
     }
 
-    
+
 }

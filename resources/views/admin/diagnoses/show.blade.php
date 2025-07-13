@@ -1,38 +1,116 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Detail Hasil Diagnosis') }}
+            {{ __('Hasil Diagnosis') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
-            <h3 class="text-lg font-bold mb-4">Informasi Umum</h3>
-            <p><strong>Tanggal:</strong> {{ $diagnosis->tanggal }}</p>
-            <p><strong>Nama User:</strong> {{ $diagnosis->user->name ?? '-' }}</p>
-            <p><strong>Hasil:</strong> {{ $diagnosis->hasil }}</p>
-            <p><strong>Hasil Fuzzy:</strong> {{ $diagnosis->hasil_fuzzy }}</p>
+        <div class="max-w-4xl mx-auto bg-white p-8 rounded shadow border border-gray-300">
+            {{-- Tabel Data Diri --}}
+            <table class="w-full table-fixed border border-gray-400 text-sm mb-6">
+                <tbody>
+                    <tr>
+                        <td class="border px-3 py-2 w-1/4 ">Nama</td>
+                        <td class="border px-3 py-2" colspan="3">{{ $diagnosis->user->name ?? '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-3 py-2 ">Tanggal Lahir</td>
+                        <td class="border px-3 py-2" colspan="3">
+                            {{$diagnosis->user->tgl_lahir }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="border px-3 py-2 ">Jenis Kelamin</td>
+                        <td class="border px-3 py-2" colspan="3">
+                            {{ ucfirst($diagnosis->user->kelamin ?? '-') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-3 py-2 ">Alamat</td>
+                        <td class="border px-3 py-2" colspan="3">{{ $diagnosis->user->alamat ?? '-' }}</td>
+                    </tr>
+                </tbody>
+            </table>
 
-            <h3 class="text-lg font-bold mt-6 mb-2">Gejala yang Dipilih:</h3>
-            <ul class="list-disc list-inside">
-                @forelse ($diagnosis->symptoms as $symptom)
-                    <li>{{ $symptom->nama }}</li>
-                @empty
-                    <li>Tidak ada gejala</li>
-                @endforelse
-            </ul>
 
-            <h3 class="text-lg font-bold mt-6 mb-2">Risiko yang Dipilih:</h3>
-            <ul class="list-disc list-inside">
-                @forelse ($diagnosis->risks as $risk)
-                    <li>{{ $risk->nama }}</li>
-                @empty
-                    <li>Tidak ada risiko</li>
-                @endforelse
-            </ul>
-            <p><strong>Hasil Diagnosis (Penyakit):</strong> {{ $diagnosis->tingkat_kemungkinan }} {{ $diagnosis->fuzzyOutput->disease->nama }}</p>
+            {{-- Tabel Hasil Diagnosis --}}
+            <h3 class="text-md font-semibold mb-2">I. Hasil Diagnosis</h3>
+            <table class="w-full border border-gray-400 text-sm mb-6">
+                <tbody>
+                    <tr>
+                        <td class="border px-3 py-2 w-1/4">Penyakit</td>
+                        <td class="border px-3 py-2">{{ $diagnosis->fuzzyOutput->disease->nama ?? '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-3 py-2">Tingkat Kemungkinan</td>
+                        <td class="border px-3 py-2">{{ $diagnosis->tingkat_kemungkinan }}</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-3 py-2">Nilai Fuzzy</td>
+                        <td class="border px-3 py-2">{{ $diagnosis->hasil_fuzzy }}%</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-3 py-2">Nilai Akhir</td>
+                        <td class="border px-3 py-2">{{ $diagnosis->hasil }}%</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-3 py-2">Tanggal Pemeriksaan</td>
+                        <td class="border px-3 py-2" colspan="3">
+                            @php
+                                \Carbon\Carbon::setLocale('id');
+                            @endphp
+                            {{ \Carbon\Carbon::parse($diagnosis->tanggal)->translatedFormat('d F Y') }}</td>
+                    </tr>
+                </tbody>
+            </table>
 
+            {{-- Tabel Gejala --}}
+            <h3 class="text-md font-semibold mb-2">II. Gejala yang Dipilih</h3>
+            <table class="w-full border border-gray-400 text-sm mb-6">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="border px-3 py-2 w-1/12 font-medium">No</th>
+                        <th class="border px-3 py-2 font-medium">Nama Gejala</th>
+                        <th class="border px-3 py-2 font-medium text-left">Rentang / Nilai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($diagnosis->symptoms as $index => $symptom)
+                        <tr>
+                            <td class="border px-3 py-1 text-center">{{ $index + 1 }}</td>
+                            <td class="border px-3 py-1">{{ $symptom->nama }}</td>
+                            <td class="border px-3 py-1">{{ $symptom->pivot->nilai }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td class="border px-3 py-1 text-center" colspan="2">Tidak ada gejala yang dipilih</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+            {{-- Tabel Risiko --}}
+            <h3 class="text-md font-semibold mb-2">III. Faktor Risiko yang Dipilih</h3>
+            <table class="w-full border border-gray-400 text-sm mb-6">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="border px-3 py-2 w-1/12 font-medium">No</th>
+                        <th class="border px-3 py-2 font-medium">Faktor Risiko</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($diagnosis->risks as $index => $risk)
+                        <tr>
+                            <td class="border px-3 py-1 text-center">{{ $index + 1 }}</td>
+                            <td class="border px-3 py-1">{{ $risk->nama }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td class="border px-3 py-1 text-center" colspan="2">Tidak ada risiko yang dipilih</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
-
 </x-app-layout>

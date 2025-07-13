@@ -11,6 +11,7 @@ use App\Models\FuzzyInput;
 use App\Models\FuzzyOutput;
 use App\Models\Rule;
 use App\Models\Diagnosis;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class DiagnosisController extends Controller
@@ -161,8 +162,6 @@ class DiagnosisController extends Controller
         // dd('Diagnosis berhasil disimpan.');
     }
 
-
-
     public function create2()
     {
         $risks = Risk::all();
@@ -273,7 +272,7 @@ class DiagnosisController extends Controller
 
     public function history()
     {
-        $diagnosis = Diagnosis::with('fuzzyOutput.disease')
+        $diagnosis = Diagnosis::with(['fuzzyOutput.disease'])
             ->where('user_id', auth()->id())
             ->orderByDesc('tanggal')
             ->get();
@@ -292,7 +291,12 @@ class DiagnosisController extends Controller
 
         return view('patient.diagnosisHistory.show', compact('diagnosis'));
     }
+    public function print($id)
+    {
+        $diagnosis = Diagnosis::findOrFail($id);
 
+        $pdf = PDF::loadView('patient.diagnosisHistory.print', ['report' => $diagnosis]);
 
-
+        return $pdf->stream('hasil_diagnosis.pdf');
+    }
 }
