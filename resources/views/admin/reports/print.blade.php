@@ -125,10 +125,11 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $report->user->name ?? '-' }}</td>
                     <td>
-                        {{ number_format($report->hasil, 1) }}
-                        ({{ $report->hasil >= 70 ? 'Tinggi' : ($report->hasil >= 50 ? 'Sedang' : 'Rendah') }})
+                        {{ $report->hasil }} %
                     </td>
-                    <td>{{ $report->penyakit->nama ?? '-' }}</td>
+                    <td>{{ $report->tingkat_kemungkinan }}
+                        {{ $symptom->fuzzyInputs->first()?->unit ?? '-' }}
+                    </td>
                     @php
                         \Carbon\Carbon::setLocale('id');
                     @endphp

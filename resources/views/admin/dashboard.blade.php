@@ -3,7 +3,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{-- Card --}}
+
                     <div class="flex justify-center items-center">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
 
@@ -13,7 +13,6 @@
                                 Selamat Datang
                             </div>
 
-                            {{-- Contoh kartu --}}
                             @php
                                 $cards = [
                                     [
@@ -59,34 +58,14 @@
                                 ];
                             @endphp
 
+                            {{-- Loop with Component --}}
                             @foreach ($cards as $card)
-                                <div
-                                    class="flex items-center justify-between bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-5 border dark:border-gray-700">
-                                    {{-- Icon --}}
-                                    <div
-                                        class="p-4 bg-{{ $card['color'] }}-100 dark:bg-{{ $card['color'] }}-900 text-{{ $card['color'] }}-600 dark:text-{{ $card['color'] }}-300 rounded-full">
-                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2"
-                                            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            {!! $card['icon'] !!}
-                                        </svg>
-                                    </div>
-
-                                    {{-- Text right-aligned --}}
-                                    <div class="text-right">
-                                        <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
-                                            {{ $card['label'] }}
-                                        </h3>
-                                        <div class="text-3xl font-bold text-gray-900 dark:text-white">
-                                            {{ $card['count'] }}
-                                        </div>
-                                    </div>
-                                </div>
+                                <x-card :label="$card['label']" :count="$card['count']" :color="$card['color']" :icon="$card['icon']" />
                             @endforeach
 
                         </div>
                     </div>
-                    {{-- end card --}}
+
                 </div>
             </div>
         </div>

@@ -19,11 +19,13 @@
             {{ request()->is('symptomTest') ? 'text-green-500 font-bold border-b-2 border-green-500' : 'text-green-700 hover:text-green-300' }}">
                 Diagnosis
             </a>
-            <a href="/diagnosisHistory/history"
-                class="text-base font-medium transition-all duration-200
-            {{ request()->is('diagnosisHistory/history') ? 'text-green-500 font-bold border-b-2 border-green-500' : 'text-green-700 hover:text-green-300' }}">
-                Riwayat Diagnosis
-            </a>
+            @auth
+                <a href="/diagnosisHistory/history"
+                    class="text-base font-medium transition-all duration-200
+                {{ request()->is('diagnosisHistory/history') ? 'text-green-500 font-bold border-b-2 border-green-500' : 'text-green-700 hover:text-green-300' }}">
+                    Riwayat Diagnosis
+                </a>
+            @endauth
             <a href="/question"
                 class="text-base font-medium transition-all duration-200
             {{ request()->is('question') ? 'text-green-500 font-bold border-b-2 border-green-500' : 'text-green-700 hover:text-green-300' }}">

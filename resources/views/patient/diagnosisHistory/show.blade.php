@@ -88,7 +88,9 @@
                         <tr>
                             <td class="border px-3 py-1 text-center">{{ $index + 1 }}</td>
                             <td class="border px-3 py-1">{{ $symptom->nama }}</td>
-                            <td class="border px-3 py-1">{{ $symptom->pivot->nilai }}</td>
+                            <td class="border px-3 py-1">
+                                {{ $symptom->pivot->nilai }} {{ $symptom->fuzzyInputs->first()?->unit ?? '-' }}
+                            </td>
                         </tr>
                     @empty
                         <tr>

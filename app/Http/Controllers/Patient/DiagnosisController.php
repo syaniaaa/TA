@@ -285,7 +285,7 @@ class DiagnosisController extends Controller
         $diagnosis = Diagnosis::with([
             'user',
             'fuzzyOutput.disease',
-            'symptoms',
+            'symptoms.fuzzyInputs',
             'risks'
         ])->findOrFail($id);
 
