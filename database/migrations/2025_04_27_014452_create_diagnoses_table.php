@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('diagnoses', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->decimal('hasil', 5, 2)->nullable();
-            $table->decimal('hasil_fuzzy', 5, 2);
+            $table->decimal('hasil', 5, 1)->nullable();
+            $table->decimal('hasil_fuzzy', 5, 1);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('fuzzy_output_id')->nullable();
             $table->string('tingkat_kemungkinan', 20)->nullable();

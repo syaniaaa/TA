@@ -53,20 +53,15 @@
                     </div>
 
                     <div>
-                        <p class="text-gray-500">Nilai Fuzzy</p>
-                        <p class="font-semibold text-gray-800">{{ $diagnosis->hasil_fuzzy }}</p>
-                    </div>
-
-                    <div>
-                        <p class="text-gray-500">Nilai Akhir (DS)</p>
-                        <p class="font-semibold text-gray-800">{{ $diagnosis->hasil }}</p>
+                        <p class="text-gray-500">Hasil</p>
+                        <p class="font-semibold text-gray-800">{{ $diagnosis->hasil }}%</p>
                     </div>
 
                     <div class="sm:col-span-2">
                         <p class="text-gray-500 mb-1">Hasil Diagnosis</p>
                         <div
                             class="bg-green-100 text-green-700 font-semibold px-6 py-3 rounded-xl inline-block shadow-sm">
-                            {{ $diagnosis->fuzzyOutput->disease->nama }}
+                            {{ $diagnosis->fuzzyOutput->disease->nama }} {{ $diagnosis->tingkat_kemungkinan }}
                         </div>
                     </div>
                 </div>

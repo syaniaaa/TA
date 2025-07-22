@@ -17,7 +17,7 @@
 
 
         <section class="pt-10 px-4 lg:px-24 text-center">
-            <h2 class="text-3xl font-bold text-green-800 mb-6">Kumpulan jawaban yang sering ditanyakan terkait TB</h2>
+            <h2 class="text-3xl font-bold text-green-800 mb-6">Kumpulan pertanyaan umum yang sering ditanyakan terkait TB</h2>
 
             <br>
 

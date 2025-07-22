@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('symptoms', function (Blueprint $table) {
             $table->id();
             $table->string('kode_gejala', 10)->unique();
-            $table->string('nama', 50);
+            $table->string('nama', 200);
             $table->enum('jenis_gejala', ['Khusus', 'Umum']);
             $table->timestamps();
         });

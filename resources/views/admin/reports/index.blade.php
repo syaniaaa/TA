@@ -43,6 +43,8 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
+                                        <th>Tingkat Keparahan</th>
+                                        <th>Penyakit</th>
                                         <th>Hasil</th>
                                         <th>Tanggal</th>
                                     </tr>
@@ -52,6 +54,8 @@
                                     <tr>
                                         <td>{{ $num++ }} </td>
                                         <td>{{ $diagnosis->user->name }}</td>
+                                        <td>{{ $diagnosis->tingkat_kemungkinan }}</td>
+                                        <td>{{ $diagnosis->fuzzyOutput->disease->nama }}</td>
                                         <td>{{ $diagnosis->hasil }}</td>
                                         <td>{{ \Carbon\Carbon::parse($diagnosis->tanggal)->format('d-m-Y') }}</td>
                                     </tr>

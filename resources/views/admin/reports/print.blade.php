@@ -114,8 +114,9 @@
             <tr>
                 <th>No</th>
                 <th>Nama Pasien</th>
+                <th>Tingkat Keparahan</th>
+                <th>Penyakit</th>
                 <th>Hasil Diagnosis</th>
-                <th>Penyakit Terdeteksi</th>
                 <th>Tanggal Pemeriksaan</th>
             </tr>
         </thead>
@@ -124,11 +125,10 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $report->user->name ?? '-' }}</td>
+                    <td>{{ $report->tingkat_kemungkinan }}</td>
+                    <td>{{ $report->fuzzyOutput->disease->nama }}</td>
                     <td>
                         {{ $report->hasil }} %
-                    </td>
-                    <td>{{ $report->tingkat_kemungkinan }}
-                        {{ $symptom->fuzzyInputs->first()?->unit ?? '-' }}
                     </td>
                     @php
                         \Carbon\Carbon::setLocale('id');

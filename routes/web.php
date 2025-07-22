@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/home', function () {
     return view('home');
-});
+})->name('home');
 
 Route::get('/', function () {
     return view('home');
@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:Staf Puskesmas'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/users', [UserController::class, 'index'])->name('user');

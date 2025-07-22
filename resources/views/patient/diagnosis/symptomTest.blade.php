@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Halaman Diagnosis</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -52,7 +52,8 @@
                         @foreach ($symptoms as $symptom)
                             <div x-data="{ checked: false }" class="mb-4">
                                 <label class="flex items-center space-x-3">
-                                    <input type="checkbox" x-model="checked"
+                                    <input type="checkbox" x-model="checked" name="gejala[{{ $symptom->id }}]"
+                                        value="0"
                                         class="form-checkbox h-5 w-5 text-green-600 transition duration-150 ease-in-out">
                                     <span class="text-sm">{{ $symptom->nama }}</span>
                                 </label>
@@ -91,6 +92,52 @@
     <div class="mt-16">
         <x-footer></x-footer>
     </div>
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+        });
+
+        @if (Session::has('message'))
+            var type = "{{ Session::get('alert-type', 'info') }}";
+            switch (type) {
+                case 'info':
+                    Toast.fire({
+                        icon: 'info',
+                        title: "{{ Session::get('message') }}"
+                    });
+                    break;
+                case 'success':
+                    Toast.fire({
+                        icon: 'success',
+                        title: "{{ Session::get('message') }}"
+                    });
+                    break;
+                case 'warning':
+                    Toast.fire({
+                        icon: 'warning',
+                        title: "{{ Session::get('message') }}"
+                    });
+                    break;
+                case 'error':
+                    Toast.fire({
+                        icon: 'error',
+                        title: "{{ Session::get('message') }}"
+                    });
+                    break;
+                case 'dialog_error':
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Oops!",
+                        text: "{{ Session::get('message') }}"
+                    });
+                    break;
+            }
+        @endif
+    </script>
+
 </body>
 
 </html>

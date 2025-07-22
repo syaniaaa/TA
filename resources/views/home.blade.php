@@ -22,8 +22,7 @@
                 Sistem Pakar Diagnosis Tuberkulosis (TB)
             </h1>
             <p class="mt-4 text-lg text-gray-100 max-w-3xl mx-auto">
-                Membantu Anda mengenali gejala TB lebih awal secara cepat dan akurat, menggunakan metode Fuzzy
-                Tsukamoto dan metode Dempster-shafer.
+                Membantu Anda mengenali gejala TB lebih awal secara cepat dan akurat
             </p>
             <a href="/symptomTest"
                 class="inline-block mt-6 px-8 py-3 bg-white text-green-600 font-semibold rounded-full border border-green-600 shadow hover:bg-green-100 transition">
@@ -34,7 +33,8 @@
         <section class="mt-16 px-4 lg:px-24 text-center">
             <h2 class="text-3xl font-bold text-green-800 mb-6">Tujuan Sistem?</h2>
             <p class="text-gray-700 max-w-4xl mx-auto text-lg">
-                Sistem ini bertujuan memberikan deteksi awal berdasarkan gejala yang anda alami. Hasil diagnosa tidak
+                Sistem ini bertujuan memberikan deteksi awal berdasarkan gejala dan faktor risiko yang anda alami. Hasil
+                diagnosa tidak
                 menggantikan pemeriksaan medis langsung.
             </p>
         </section>
@@ -81,56 +81,6 @@
                 </div>
             </div>
         </section>
-
-
-
-        <!-- Cara Kerja -->
-        <section class="mt-20 px-4 lg:px-24 text-center">
-            <h2 class="text-3xl font-bold text-green-800 mb-6">Bagaimana Sistem Ini Bekerja?</h2>
-            <p class="text-gray-700 max-w-3xl mx-auto mb-8">
-                Sistem ini menggunakan algoritma <strong>Fuzzy Tsukamoto</strong> untuk menganalisis gejala yang Anda
-                masukkan dan algoritma <strong>Dempster-shafer</strong> untuk menganalisis risiko yang dirasakan oleh
-                anda.
-            </p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div class="py-6">
-                    <div
-                        class="w-10 h-10 flex items-center justify-center rounded bg-green-600 text-white mx-auto mb-2">
-                        1
-                    </div>
-                    <p class="font-semibold">Input Gejala</p>
-                    <p class="text-sm text-gray-600">Pengguna memilih gejala yang dirasakan.</p>
-                </div>
-                <div class="py-6">
-                    <div
-                        class="w-10 h-10 flex items-center justify-center rounded bg-green-600 text-white mx-auto mb-2">
-                        2
-                    </div>
-                    <p class="font-semibold">Pemrosesan</p>
-                    <p class="text-sm text-gray-600">Sistem melakukan inferensi menggunakan metode fuzzy.</p>
-                </div>
-                <div class="py-6">
-                    <div
-                        class="w-10 h-10 flex items-center justify-center rounded bg-green-600 text-white mx-auto mb-2">
-                        3
-                    </div>
-                    <p class="font-semibold">Analisis Risiko</p>
-                    <p class="text-sm text-gray-600">Sistem menganalisis risiko menggunakan metode Dempster-Shafer.</p>
-                </div>
-                <div class="py-6">
-                    <div
-                        class="w-10 h-10 flex items-center justify-center rounded bg-green-600 text-white mx-auto mb-2">
-                        4
-                    </div>
-                    <p class="font-semibold">Hasil Diagnosa</p>
-                    <p class="text-sm text-gray-600">Sistem menampilkan kemungkinan kondisi TB berdasarkan gejala.</p>
-                </div>
-            </div>
-
-
-        </section>
-
-
 
     </div>
 

@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\Symptom;
 use App\Models\Risk;
 use App\Models\FuzzyInput;
-use App\Models\FuzzyOutput;
 use App\Models\Rule;
 use App\Models\Diagnosis;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -22,29 +21,39 @@ class DiagnosisController extends Controller
         return view('patient.diagnosis.symptomTest', compact('symptoms'));
     }
 
-
     public function store(Request $request)
     {
-        $jawaban = $request->input('gejala');
+        session()->forget(['diagnosis_id', 'hasil_fuzzy', 'fuzzy_output_id']);
+
+        // Ambil input dan filter nilai kosong/null
+        $jawaban = $request->input('gejala', []);
+        $validJawaban = array_filter($jawaban, function ($v) {
+            return $v !== null && $v !== '';
+        });
 
         // 1. Validasi jumlah gejala dan gejala khusus
-        if (count($jawaban) < 3 || count($jawaban) > 8) {
-            return back()->with('error', 'Pilih minimal 3 dan maksimal 8 gejala.');
+        if (count($validJawaban) < 3 || count($validJawaban) > 8) {
+            return back()->with([
+                'alert-type' => 'error',
+                'message' => 'Pilih minimal 3 dan maksimal 8 gejala dengan nilai yang diisi.'
+            ]);
         }
 
-        $gejalaKhusus = Symptom::whereIn('id', array_keys($jawaban))
+        $gejalaKhusus = Symptom::whereIn('id', array_keys($validJawaban))
             ->where('jenis_gejala', 'Khusus')
             ->exists();
 
         if (!$gejalaKhusus) {
-            return back()->with('error', 'Minimal satu gejala khusus harus dipilih.');
+            return back()->with([
+                'alert-type' => 'error',
+                'message' => 'Minimal satu gejala khusus harus dipilih.'
+            ]);
         }
 
         // 2. Fuzzifikasi
         $fuzzifikasi = [];
-        foreach ($jawaban as $symptomId => $nilaiInput) {
+        foreach ($validJawaban as $symptomId => $nilaiInput) {
             $nilai = floatval($nilaiInput);
-
             $fuzzyInputs = FuzzyInput::where('symptom_id', $symptomId)->get();
 
             foreach ($fuzzyInputs as $fi) {
@@ -76,27 +85,29 @@ class DiagnosisController extends Controller
             }
         }
 
-        // 3. Inferensi: Cek rule yang aktif
+        // 3. Inferensi
         $activeRules = [];
-        foreach (Rule::with(['fuzzyInputs', 'fuzzyOutput'])->get() as $rule) {
-            $inputIds = $rule->fuzzyInputs->pluck('id')->toArray();
+        foreach (Rule::with(['fuzzyInputs.symptom', 'fuzzyOutput'])->get() as $rule) {
             $muList = [];
+            $gejalaKhususTerpilih = false;
 
-            foreach ($inputIds as $fid) {
-                $match = collect($fuzzifikasi)->firstWhere('fuzzy_input_id', $fid);
+            foreach ($rule->fuzzyInputs as $fuzzyInput) {
+                $symptomId = $fuzzyInput->symptom_id;
+                $match = collect($fuzzifikasi)->firstWhere('fuzzy_input_id', $fuzzyInput->id);
                 if ($match) {
                     $muList[] = $match['mu'];
+
+                    // Cek apakah gejala ini jenisnya "Khusus"
+                    if ($fuzzyInput->symptom->jenis_gejala == 'Khusus') {
+                        $gejalaKhususTerpilih = true;
+                    }
                 }
             }
 
-            if (count($muList) == count($inputIds)) {
+            // Syarat minimal 3 gejala dari rule cocok DAN minimal 1 gejala khusus
+            if (count($muList) >= 3 && $gejalaKhususTerpilih) {
                 $alpha = min($muList);
                 $output = $rule->fuzzyOutput;
-
-                // DEBUG: tampilkan alpha dan output
-                dump("Rule ID: {$rule->id}");
-                dump("Alpha: {$alpha}");
-                dump("Output: {$output->label} ({$output->min} - {$output->max}, arah: {$output->arah})");
 
                 if ($alpha > 0) {
                     if ($output->arah == 'Turun') {
@@ -112,23 +123,21 @@ class DiagnosisController extends Controller
                         }
                     }
 
-
-                    dump("Z (output nilai): {$z}");
                     $activeRules[] = [
                         'alpha' => $alpha,
                         'z' => $z,
                         'fuzzy_output_id' => $output->id,
                     ];
-                } else {
-                    dump("⛔ Rule ID {$rule->id} dilewati karena alpha = 0");
                 }
             }
-
-
         }
 
+
         if (empty($activeRules)) {
-            return back()->with('error', 'Tidak ada rule yang cocok. Coba pilih gejala lain.');
+            return back()->with([
+                'alert-type' => 'error',
+                'message' => 'Tidak ada rule yang cocok. Coba pilih gejala lain.'
+            ]);
         }
 
         // 4. Defuzzifikasi
@@ -141,25 +150,27 @@ class DiagnosisController extends Controller
         // 5. Simpan hasil diagnosis
         $diagnosis = Diagnosis::create([
             'tanggal' => now(),
-            'hasil_fuzzy' => round($zFinal, 2),
+            'hasil_fuzzy' => round($zFinal, 1),
             'user_id' => auth()->id(),
             'fuzzy_output_id' => $terkuat['fuzzy_output_id'],
         ]);
 
         // 6. Simpan ke tabel pivot symptom_diagnosis
-        foreach ($jawaban as $symptomId => $value) {
+        foreach ($validJawaban as $symptomId => $value) {
             $diagnosis->symptoms()->attach($symptomId, ['nilai' => $value]);
         }
 
+        // 7. Simpan ke session untuk langkah berikutnya
         session([
             'diagnosis_id' => $diagnosis->id,
             'hasil_fuzzy' => $zFinal,
             'fuzzy_output_id' => $terkuat['fuzzy_output_id'],
         ]);
 
-        return redirect()->route('patient.diagnosis.riskTest')->with('success', 'Fuzzifikasi berhasil, lanjut ke risiko.');
-
-        // dd('Diagnosis berhasil disimpan.');
+        return redirect()->route('diagnosis.riskTest')->with([
+            'alert-type' => 'success',
+            'message' => 'Fuzzifikasi berhasil, lanjut ke risiko.'
+        ]);
     }
 
     public function create2()
@@ -187,7 +198,7 @@ class DiagnosisController extends Controller
         if (!$risikoDipilih || count($risikoDipilih) === 0) {
             $belief = $hasilFuzzy / 100;
             $plausibility = 1;
-            $hasilDST = round($belief * 100, 2);
+            $hasilDST = round($belief * 100, 1);
         } else {
             if (count($risikoDipilih) > 4) {
                 return back()->with('error', 'Pilih maksimal 4 faktor risiko.');
@@ -218,7 +229,7 @@ class DiagnosisController extends Controller
 
             $belief = $M_TB;
             $plausibility = 1 - $M_Theta;
-            $hasilDST = round($belief * 100, 2);
+            $hasilDST = round($belief * 100, 1);
         }
 
         // Klasifikasi tingkat kemungkinan
@@ -251,13 +262,12 @@ class DiagnosisController extends Controller
             }
         }
 
-        return redirect()->route('diagnosis.riskTest')->with([
+        return redirect()->route('diagnosis.result')->with([
             'success' => 'Diagnosis berhasil disimpan.',
             'hasilDST' => $hasilDST,
             'tingkatKemungkinan' => $tingkatKemungkinan,
         ]);
     }
-
 
     public function showResult()
     {
@@ -268,7 +278,6 @@ class DiagnosisController extends Controller
 
         return view('patient.diagnosis.result', compact('diagnosis'));
     }
-
 
     public function history()
     {

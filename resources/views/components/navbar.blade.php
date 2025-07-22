@@ -29,7 +29,7 @@
             <a href="/question"
                 class="text-base font-medium transition-all duration-200
             {{ request()->is('question') ? 'text-green-500 font-bold border-b-2 border-green-500' : 'text-green-700 hover:text-green-300' }}">
-                Tanya Jawab Seputar TB
+                Seputar TB
             </a>
             <a href="/aboutUs"
                 class="text-base font-medium transition-all duration-200
