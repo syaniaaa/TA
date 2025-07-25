@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\RuleController;
 use App\Http\Controllers\Admin\RiskController;
 use App\Http\Controllers\Admin\DiagnosisController;
 use App\Http\Controllers\Patient\DiagnosisController as PatientDiagnosisController;
+use App\Http\Controllers\Patient\FuzzyTsukamotoController;
+use App\Http\Controllers\Patient\DempsterShaferController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\DashboardController;
 
@@ -39,11 +41,19 @@ Route::middleware('auth')->group(function () {
         return view('patient.diagnosis.result');
     })->name('diagnosis.result');
 
-    Route::get('/symptomTest', [PatientDiagnosisController::class, 'create'])->name('diagnosis.symptomTest');
-    Route::post('/symptomTest', [PatientDiagnosisController::class, 'store'])->name('diagnosis.symptomTest.store');
-    Route::get('/riskTest', [PatientDiagnosisController::class, 'create2'])->name('diagnosis.riskTest');
-    Route::post('/riskTest', [PatientDiagnosisController::class, 'store2'])->name('diagnosis.riskTest.store2');
-    Route::get('/result', [PatientDiagnosisController::class, 'showResult'])->name('diagnosis.result');
+    // Route::get('/symptomTest', [PatientDiagnosisController::class, 'create'])->name('diagnosis.symptomTest');
+    // Route::post('/symptomTest', [PatientDiagnosisController::class, 'store'])->name('diagnosis.symptomTest.store');
+    // Route::get('/riskTest', [PatientDiagnosisController::class, 'create2'])->name('diagnosis.riskTest');
+    // Route::post('/riskTest', [PatientDiagnosisController::class, 'store2'])->name('diagnosis.riskTest.store2');
+
+    // Fuzzy Tsukamoto
+    Route::get('/symptomTest', [FuzzyTsukamotoController::class, 'create'])->name('fuzzy.create');
+    Route::post('/symptomTest', [FuzzyTsukamotoController::class, 'store'])->name('fuzzy.store');
+
+    // Dempster-Shafer
+    Route::get('/riskTest', [DempsterShaferController::class, 'create'])->name('ds.create');
+    Route::post('/riskTest', [DempsterShaferController::class, 'store'])->name('ds.store');
+    Route::get('/result', [PatientDiagnosisController::class, 'showResult'])->name('patient.diagnosis.result');
     Route::get('/diagnosisHistory/history', [PatientDiagnosisController::class, 'history'])->name('diagnosis.history');
     Route::get('/patient/diagnosis-history/{id}', [PatientDiagnosisController::class, 'show'])
         ->name('patient.diagnosisHistory.show');
@@ -61,6 +71,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'role:Pasien'])->group(function () {
+    Route::get('/profile/edit-frontend', [ProfileController::class, 'edit2'])->name('profile.edit-frontend');
+
 });
 
 require __DIR__ . '/auth.php';

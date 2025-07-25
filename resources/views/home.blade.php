@@ -17,7 +17,7 @@
 
         <!-- Hero Section -->
         <section class="p-10 text-center shadow-md rounded-xl mx-4 lg:mx-24 bg-no-repeat bg-cover bg-center"
-            style="background-image: linear-gradient(to right, rgba(20, 139, 64, 0.9), rgba(78, 228, 40, 0.9)), url('/img/bg.png');">
+            style="background-image: linear-gradient(to right, rgba(20, 139, 64, 0.829), rgba(78, 228, 40, 0.637)), url('/img/bg.png');">
             <h1 class="text-4xl lg:text-5xl font-extrabold text-gray-100">
                 Sistem Pakar Diagnosis Tuberkulosis (TB)
             </h1>

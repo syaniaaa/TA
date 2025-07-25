@@ -24,17 +24,17 @@
         <div class="grid grid-cols-1 gap-4 px-4 mt-10 text-center sm:grid-cols-3 lg:mx-24">
             <div class="p-6 bg-white border rounded shadow">
                 <p class="text-lg font-semibold text-gray-700">Total Diagnosis</p>
-                <p class="mt-2 text-2xl font-bold text-green-700">{{ $diagnosis->count() }} Kali</p>
+                <p class="mt-2 text-2xl font-bold text-gray-600">{{ $diagnosis->count() }} Kali</p>
             </div>
             <div class="p-6 bg-white border rounded shadow">
                 <p class="text-lg font-semibold text-gray-700">Diagnosis Terakhir</p>
-                <p class="mt-2 text-2xl font-bold text-green-700">
+                <p class="mt-2 text-2xl font-bold text-gray-600">
                     {{ $diagnosis->first()?->tanggal ? \Carbon\Carbon::parse($diagnosis->first()->tanggal)->format('d-m-Y') : '-' }}
                 </p>
             </div>
             <div class="p-6 bg-white border rounded shadow">
                 <p class="text-lg font-semibold text-gray-700">Status Diagnosis Terakhir</p>
-                <p class="mt-2 text-2xl font-bold text-green-700">
+                <p class="mt-2 text-2xl font-bold text-gray-600">
                     {{ $diagnosis->first()?->hasil ?? '-' }}%
                     ({{ $diagnosis->first()?->fuzzyOutput->disease->nama ?? '-' }})
                 </p>
@@ -63,7 +63,7 @@
                         <td class="p-3">{{ $item->hasil ?? '-' }}%</td>
                         <td class="p-3 space-x-2">
                             {{-- Tombol Lihat Detail --}}
-                            <x-primary-button tag="a"
+                            <x-tertiary-button tag="a"
                                 class="inline-flex items-center px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl shadow-sm transition transform hover:scale-105"
                                 href="{{ route('patient.diagnosisHistory.show', $item->id) }}">
                                 <svg class="w-4 h-4 text-gray-100 dark:text-white mr-1"
@@ -73,7 +73,7 @@
                                     <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                 </svg>
                                 Lihat Detail
-                            </x-primary-button>
+                            </x-tertiary-button>
 
                             {{-- Tombol Print --}}
                             <x-secondary-button tag="a"

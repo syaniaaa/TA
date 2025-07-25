@@ -46,7 +46,7 @@
                 @endif
 
 
-                <form method="POST" action="{{ route('diagnosis.symptomTest.store') }}">
+                <form method="POST" action="{{ route('fuzzy.store') }}">
                     @csrf
                     <div class="space-y-4 text-gray-800">
                         @foreach ($symptoms as $symptom)
@@ -59,9 +59,23 @@
                                 </label>
 
                                 <div x-show="checked" x-transition class="ml-8 mt-2">
-                                    <label class="block text-sm font-medium text-gray-600 mb-1">
-                                        Berapa ({{ $symptom->FuzzyInputs->first()->unit ?? 'Hari' }}) yang Anda rasakan?
-                                    </label>
+                                    @php
+                                        $unit = $symptom->FuzzyInputs->first()->unit ?? 'Hari';
+                                    @endphp
+
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <label class="block text-sm font-medium text-gray-600">
+                                            Berapa {{ $unit }} yang Anda rasakan?
+                                        </label>
+
+                                        @if ($unit === 'Skala')
+                                            <button type="button" onclick="showKeteranganSkala()"
+                                                class="text-xs bg-yellow-300 hover:bg-yellow-400 text-gray-800 font-semibold px-2 py-1 rounded">
+                                                Keterangan
+                                            </button>
+                                        @endif
+                                    </div>
+
                                     <input type="number" name="gejala[{{ $symptom->id }}]" min="0"
                                         placeholder="Masukkan Jumlah" class="w-full p-2 border border-gray-300 rounded">
                                 </div>
@@ -71,9 +85,10 @@
 
                     <div class="pt-4 flex flex-col sm:flex-row sm:justify-end gap-4">
                         <button type="submit"
-                            class="w-full sm:w-auto text-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-xl transition duration-200 shadow-lg hover:shadow-2xl">
+                            class="w-full sm:w-auto text-center bg-white hover:bg-green-300 text-green-600 font-semibold py-2 px-6 rounded-xl transition duration-200
+                                shadow-lg hover:shadow-2xl outline-none hover:outline-2 hover:outline-green-600">
                             Lanjutkan
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block text-white ml-2"
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block text-green-600 ml-2"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"></path>
                             </svg>
@@ -92,7 +107,7 @@
     <div class="mt-16">
         <x-footer></x-footer>
     </div>
-    <script>
+    {{-- <script>
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -136,6 +151,32 @@
                     break;
             }
         @endif
+    </script> --}}
+
+    <script>
+        function showKeteranganSkala() {
+            Swal.fire({
+                title: 'Keterangan Skala',
+                html: `
+                    <div class="text-left text-sm">
+                        <b>Skala 1–10</b><br>
+                        1 = Tidak<br>
+                        2–4 = Ringan<br>
+                        5–7 = Sedang<br>
+                        8–10 = Parah
+                    </div>
+                `,
+                icon: null, // tidak pakai ikon
+                showConfirmButton: true,
+                confirmButtonText: 'Tutup',
+                customClass: {
+                    popup: 'rounded-lg p-4', // lebih kecil dan rapi
+                    title: 'text-lg font-semibold text-gray-800',
+                    confirmButton: 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600'
+                },
+                width: '400px' // lebih kecil
+            });
+        }
     </script>
 
 </body>

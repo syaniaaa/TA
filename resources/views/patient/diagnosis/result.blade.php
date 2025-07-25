@@ -61,7 +61,7 @@
                         <p class="text-gray-500 mb-1">Hasil Diagnosis</p>
                         <div
                             class="bg-green-100 text-green-700 font-semibold px-6 py-3 rounded-xl inline-block shadow-sm">
-                            {{ $diagnosis->fuzzyOutput->disease->nama }} {{ $diagnosis->tingkat_kemungkinan }}
+                            {{ $diagnosis->tingkat_kemungkinan }} {{ $diagnosis->fuzzyOutput->disease->nama }}
                         </div>
                     </div>
                 </div>

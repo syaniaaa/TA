@@ -33,7 +33,13 @@
             <div class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md">
                 <h2 class="text-xl font-semibold mb-4 text-gray-700">Pilih Risiko yang Dirasakan</h2>
 
-                <form method="POST" action="{{ route('diagnosis.riskTest.store2') }}">
+                @if (session('error'))
+                    <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('ds.store') }}">
                     @csrf
                     <div class="space-y-4 text-gray-800">
                         @foreach ($risks as $risk)

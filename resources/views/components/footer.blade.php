@@ -5,18 +5,18 @@
 
             <!-- Identitas -->
             <div>
-                <h2 class="text-2xl font-bold">Puskesmas Cugenang</h2>
+                <h2 class="text-2xl font-bold">SIPARTU</h2>
                 <p class="text-sm">Sistem Pakar Diagnosis Tuberkulosis (TB)</p>
                 <p class="text-sm mt-1">&copy; {{ date('Y') }} Semua Hak Dilindungi.</p>
             </div>
 
-            <!-- Alamat dan Kontak -->
+            {{-- <!-- Alamat dan Kontak -->
             <div>
                 <h3 class="text-lg font-semibold mb-2">Kontak Kami</h3>
                 <p class="text-sm">Jl. Kesehatan No. 10, Jakarta</p>
                 <p class="text-sm">Telp: (021) 123-4567</p>
                 <p class="text-sm">Email: info@puskesmassehat.id</p>
-            </div>
+            </div> --}}
 
             <!-- Sosial Media -->
             <div>

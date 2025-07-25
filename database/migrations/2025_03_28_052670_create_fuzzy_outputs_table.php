@@ -16,7 +16,7 @@ return new class extends Migration
             $table->enum('himpunan', ['Rendah', 'Sedang', 'Tinggi']);
             $table->float('min');
             $table->float('max');
-            $table->float('mid')->nullable(); 
+            $table->float('mid')->nullable();
             $table->enum('arah', ['Naik', 'Turun', 'Segitiga']);
             $table->unsignedBigInteger('disease_id');
             $table->foreign('disease_id')->references('id')->on('diseases')->onDelete('cascade');

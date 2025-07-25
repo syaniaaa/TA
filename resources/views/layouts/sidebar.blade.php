@@ -1,7 +1,6 @@
-<div class="px-6 flex justify-center ">
-    <a class="flex-none text-xl font-semibold dark:text-white" aria-label="Brand">
-        <img class="w-30 h-20" src="img/logo.png">
-    </a>
+<div class="flex flex-col items-center justify-center px-2 py-2">
+    <img src="img/logo.png" alt="Logo" class="w-[80px] h-[80px] object-contain mb-0.5">
+    <span class="text-2xl font-bold text-green-600 drop-shadow">SIPARTU</span>
 </div>
 
 <nav class="font-poppins hs-accordion-group p-6 w-full flex flex-col flex-wrap" data-hs-accordion-always-open>
@@ -80,7 +79,7 @@
 
                     <li>
                         <x-nav-link :href="route('fuzzy_input')" :active="request()->routeIs('fuzzy_input') || request()->routeIs('fuzzy_input.index')">
-                            {{ __('Kelola Aturan Gejala') }}
+                            {{ __('Kelola Bobot Gejala') }}
                         </x-nav-link>
                     </li>
                 </ul>
@@ -129,8 +128,8 @@
 
         <li>
             <x-nav-link :href="route('report')" :active="request()->routeIs('report') || request()->routeIs('report.index')">
-                <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                    fill="none" viewBox="0 0 24 24">
+                <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667" />
                 </svg>
